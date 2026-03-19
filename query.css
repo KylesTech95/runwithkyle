@@ -1,0 +1,102 @@
+/* Extra Small Mobile (Portrait - 320px to 480px) */
+@media only screen and (max-width: 480px) {
+    .blank-section{
+        height:150px;
+    }
+    
+    .section-column{
+    border-bottom: 5.5px solid var(--primary-color);
+    
+    padding:.5rem;
+
+    box-shadow: 0 .5rem 12px .9px var(--border-secondary);
+
+    width:100%;
+    min-width:unset;
+
+    margin:1rem auto;
+}
+    /* Rules for iPhones and Samsung Portrait */
+    #nav-toggle-container {
+        display:flex;
+        visibility: visible;
+    }
+
+    /* logo */
+    #logo-container {
+        height:100%;
+        width:200px;
+
+        border:5px solid var(--border-abstract);
+
+        float:left;
+
+        margin:.25rem .5rem 0;
+    }
+
+    #nav-list-container {
+        display:none;
+    }
+
+    #nav-list-container-mobile {
+        display:flex;
+    }
+    /* mobile nav open if enabled */
+    .mobile-nav-open{
+        transform:translate(0,0) !important;
+    }
+
+    .nav-list-item{
+        border-left:none;
+    }
+    
+}
+
+
+@media only screen and (min-width:680px) and (max-width: 915px) {
+    .blank-section{
+        height:150px;
+    }
+
+
+    .section-column{
+    border-bottom: 5.5px solid var(--primary-color);
+    
+    padding:.5rem;
+
+    box-shadow: 0 .5rem 12px .9px var(--border-secondary);
+
+    width:100% !important;
+    min-width:unset;
+    
+    margin:1rem auto;
+}
+    /* Rules for iPhones and Samsung Portrait */
+    #nav-toggle-container {
+        display:flex;
+        visibility: visible;
+    }
+
+    /* logo */
+    #logo-container {
+        border:5px solid var(--border-abstract);
+
+        float:left;
+    }
+
+    #nav-list-container {
+        display:none;
+    }
+
+    #nav-list-container-mobile {
+        display:flex;
+    }
+    /* mobile nav open if enabled */
+    .mobile-nav-open{
+        transform:translate(0,0) !important;
+    }
+
+    .nav-list-item{
+        border-left:none;
+    }
+}
