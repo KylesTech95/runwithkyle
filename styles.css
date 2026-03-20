@@ -108,6 +108,13 @@ body {
     background-position: center;
     background-image: var(--primary-bg-url);
 
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    gap:1.25rem;
+
 }
 
 /* header */
@@ -363,5 +370,67 @@ nav#nav{
 .about-me-para {
     color:var(--primary-color);
     font-size: var(--font-para);
+}
+/* ______________________________ */
+/*  */
+
+
+
+/* schedule */
+/* ______________________________ */
+#rwk-schedule {
+    
+}
+#scheduled-item-list-container{
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+
+    gap:.25rem;
+
+}
+.si-list-item {
+
+    width: 97%;
+    min-height:66px;
+
+    background:var(--secondary-bg);
+
+    /* border:2px solid var(--border-abstract); */
+
+    color:var(--secondary-color);
+
+    display:flex;
+    justify-content: start;
+    align-items: center;
+
+    padding: 0 .5rem;
+}
+
+#date-container{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    background:var(--primary-bg);
+
+    width:50px;
+    height:50px;
+
+    border-radius: 8px;
+
+    padding:.25rem;
+
+}
+#date-container > p,#date-container > h4{
+    color:var(--primary-color);
+}
+.si-list-item > p{
+    font-size:11pt;
+}
+.si-list-item > h4{
+    font-size:18pt;
 }
 /* ______________________________ */
