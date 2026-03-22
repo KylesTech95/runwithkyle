@@ -3,7 +3,20 @@ const navToggleContainer = document.getElementById('nav-toggle-container')
 const nav_container = document.getElementById('nav-list-container')
 const nav_container_mobile = document.getElementById('nav-list-container-mobile')
 const mobile_nav_open = 'mobile-nav-open';
-
+const months = {
+            jan:1,
+            feb:2,
+            mar:3,
+            apr:4,
+            may:5,
+            jun:6,
+            jul:7,
+            aug:8,
+            sep:9,
+            oct:10,
+            nov:11,
+            dec:12
+    }
 const maxBars = 2;
 
 
@@ -72,6 +85,55 @@ function toggleNav(e) {
         nav_container_mobile.classList.remove(mobile_nav_open);
     }
 }
+// convert time from date.now() to m/d/time/etc...
+function convertTime(num){ // integer
+    const newDate = new Date(num);
+    const [year, day, month] = [newDate.getUTCFullYear(), newDate.getDate(), (+newDate.getMonth() < 10 ? `0${+newDate.getMonth() + 1}` : +newDate.getMonth() + 1)]
+    const [hours,minutes,seconds] = [newDate.getHours(), newDate.getMinutes(), newDate.getSeconds()];
 
+    console.log("TIMESTAMP",`${year}-${month}-${day}`)
+    console.log("TIMESTAMP",`${hours}:${minutes}:${seconds}`)
+    
+}
+
+// test current time
+setInterval(()=>{
+    convertTime(Date.now()) // integer
+},1000)
+
+
+
+function getMonth(num){
+    num = Number(+num)
+   if(!num) return false;
+    
+    
+    // const secured_month = months[num]||undefined;
+
+
+    let secured_month;
+    
+    // loop through months/object
+    for(let i in months) {
+        if (num === months[i]) { // if value === arg
+            secured_month = i; // store month
+        }
+    }
+    // if month is not stored
+    if(!secured_month){
+        console.error('getMonth(): month not selected');
+        return false;
+    }
+
+    // return result
+    return secured_month.toUpperCase();
+    
+
+
+}
+
+getMonth(5)
+let current_month = getMonth(13);
+console.log(current_month)
 
 navToggleContainer.onclick = toggleNav;
