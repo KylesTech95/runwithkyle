@@ -440,7 +440,7 @@ nav#nav{
 
 #input-container{
     width:100%;
-    background:#000;
+    background:var(--primary-bg );
     padding:6px;
 }
 
@@ -449,6 +449,8 @@ nav#nav{
     padding:4px;
     border-radius: 6px;
     font-size:12pt; 
+
+    color:var(--secondary-color)
 }
 
 #datetime-submit:hover {
