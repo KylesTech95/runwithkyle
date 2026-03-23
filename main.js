@@ -1,8 +1,18 @@
-// vars
+// imports
+import generateCalendarListItem from "./component/calendar.js";
+
+
+// vars (variables)
 const navToggleContainer = document.getElementById('nav-toggle-container')
 const nav_container = document.getElementById('nav-list-container')
 const nav_container_mobile = document.getElementById('nav-list-container-mobile')
 const mobile_nav_open = 'mobile-nav-open';
+const shedule_list_container = document.getElementById('scheduled-item-list-container')
+const datetime_submit = document.getElementById('datetime-submit')
+const maxBars = 2;
+
+
+// object data
 const months = {
             jan:1,
             feb:2,
@@ -16,11 +26,11 @@ const months = {
             oct:10,
             nov:11,
             dec:12
-    }
-const maxBars = 2;
-
-
-// object data
+}
+const inputs = {
+    date:document.getElementById('scheduled-date'),
+    time:document.getElementById('appointment-time')
+}
 const object = {
     error:'object is not present',
     success:'Object loaded successfully',
@@ -33,7 +43,53 @@ const navigation_commander = {
     regular:null,
 }
 
+// control
+inputs.date.setAttribute('min', convertTime(Date.now()).date)
 
+
+// oninputs
+for(let i in inputs){
+    inputs[i].oninput = e => {
+        let target = e.target || undefined;
+        
+        if(target){
+            let value = target.value;
+
+            // check if both values are selected
+            if(Object.values(inputs).every(input => input.value)) {
+                console.log('both items are selected')
+
+                // submit appears
+                addSubmit()
+
+
+                datetime_submit.onclick = () => handleDatetimeSubmit(inputs)
+                
+            } else {
+                console.log('waiting on an item')
+                // submit disappears
+                removeSubmit()
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+/*================================================== */
+// testing site
+
+
+
+/*================================================== */
+
+// functions
 // toggle navigation (mobile)
 function toggleNav(e) {
     const cross = 'cross-'; // var
@@ -91,19 +147,13 @@ function convertTime(num){ // integer
     const [year, day, month] = [newDate.getUTCFullYear(), newDate.getDate(), (+newDate.getMonth() < 10 ? `0${+newDate.getMonth() + 1}` : +newDate.getMonth() + 1)]
     const [hours,minutes,seconds] = [newDate.getHours(), newDate.getMinutes(), newDate.getSeconds()];
 
-    console.log("TIMESTAMP",`${year}-${month}-${day}`)
-    console.log("TIMESTAMP",`${hours}:${minutes}:${seconds}`)
-    
+    const date = `${year}-${month}-${day}`;
+    const time = `${hours}:${minutes}:${seconds}`;
+
+    return {date:date,time:time}
 }
-
-// test current time
-setInterval(()=>{
-    convertTime(Date.now()) // integer
-},1000)
-
-
-
-function getMonth(num){
+// get month
+export function getMonth(num){
     num = Number(+num)
    if(!num) return false;
     
@@ -131,9 +181,46 @@ function getMonth(num){
 
 
 }
+// submit date/time onclick 
+function handleDatetimeSubmit(inputs){
+    let str = '';
+    
+    // check if values are present
+    if(inputs.date.value && inputs.time.value){
 
-getMonth(5)
-let current_month = getMonth(13);
-console.log(current_month)
+        // update string
+        str += inputs.date.value;
+        str += 'T'
+        str += inputs.time.value
 
+    }
+    // store new datetime in variable
+    const newDateTime = new Date(str).getTime();
+
+    // convert datetime to object {date,time}
+    const get_datetime = convertTime(newDateTime);
+
+
+    // generate list item
+    let listitem = generateCalendarListItem(get_datetime);
+    shedule_list_container.appendChild(listitem) // append listitem to ul
+
+
+    // garbage / trash
+    removeSubmit()
+    inputs.date.value = ''
+    inputs.time.value = ''
+
+    // return 
+    return true;
+}
+
+
+function removeSubmit() {
+    datetime_submit.classList.add('no-display')
+}
+
+function addSubmit() {
+    datetime_submit.classList.remove('no-display')
+}
 navToggleContainer.onclick = toggleNav;

@@ -435,3 +435,22 @@ nav#nav{
     font-size:18pt;
 }
 /* ______________________________ */
+
+/* datetime */
+
+#input-container{
+    width:100%;
+    background:#000;
+    padding:6px;
+}
+
+#datetime-submit{
+    background:var(--secondary-bg);
+    padding:4px;
+    border-radius: 6px;
+    font-size:12pt; 
+}
+
+#datetime-submit:hover {
+    cursor:pointer;
+}

@@ -84,7 +84,7 @@
             <p class="about-me-para about-para lh-double">
                 Running turned my life around, but it's even better with a crew. I'm Kyle, and I run to feel alive, free, and unstoppable. This page is for anyone needing that extra push out the door or a friendly face to share the journey. I don’t run for the fastest time, I run to turn doubt into determination. Come run with me—let's make some magic happen, one stride at a time.
             </p>
-         </div>
+         </div> 
     </section>
 
 
@@ -93,7 +93,7 @@
             <h3 class="section-column-label">schedule</h3>
         <!-- scheduled items list container -->
         <ul id="scheduled-item-list-container">
-            <li class="si-list-item">
+            <!-- <li class="si-list-item">
                 <div id="date-container">
                     <p>MAY</p>
                     <h4>15</h4>
@@ -101,23 +101,39 @@
             </li>
             <li class="si-list-item">
                 <div id="date-container">
-                    <p>Jun</p>
+                    <p>JUN</p>
                     <h4>4</h4>
                 </div>
             </li>
             <li class="si-list-item">
                 <div id="date-container">
-                    <p>Jul</p>
+                    <p>JUL</p>
                     <h4>11</h4>
                 </div>
             </li>
             <li class="si-list-item">
                 <div id="date-container">
-                    <p>Aug</p>
+                    <p>AUG</p>
                     <h4>8</h4>
                 </div>
-            </li>
+            </li> -->
         </ul>
+
+        <!-- set date and time -->
+        <div id="input-container">
+            
+            <input type="date" name="scheduled-date" id="scheduled-date" required>
+
+             <input
+            type="time"
+            id="appointment-time"
+            name="appointment-time"
+            min="09:00"
+            max="18:00"
+            required />
+
+            <span id="datetime-submit" class="no-display">Submit</span>
+        </div>
     </section>
 
 
