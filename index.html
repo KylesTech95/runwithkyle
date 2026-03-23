@@ -90,7 +90,7 @@
 
     <!-- scheduled runs / cta -->
     <section id="rwk-schedule" class="section-column">
-            <h3 class="section-column-label">schedule</h3>
+            <h3 class="section-column-label">My schedule</h3>
         <!-- scheduled items list container -->
         <ul id="scheduled-item-list-container">
             <!-- <li class="si-list-item">
@@ -136,6 +136,30 @@
         </div>
     </section>
 
+     <!-- client data (users can access after logging in) -->
+    <section id="client-schedule" class="section-column">
+            <h3 class="section-column-label">Your schedule</h3>
+        <!-- scheduled items list container -->
+        <ul id="scheduled-item-list-container">
+            
+        </ul>
+
+        <!-- set date and time -->
+        <div id="input-container" class="no-pointer">
+            
+            <input type="date" name="scheduled-date" id="scheduled-date" required>
+
+             <input
+            type="time"
+            id="appointment-time"
+            name="appointment-time"
+            min="09:00"
+            max="18:00"
+            required />
+
+            <span id="datetime-submit" class="no-display">Submit</span>
+        </div>
+    </section>
 
     <!-- gallery -->
     <section id="rwk-gallery">

@@ -379,9 +379,7 @@ nav#nav{
 
 /* schedule */
 /* ______________________________ */
-#rwk-schedule {
-    
-}
+
 #scheduled-item-list-container{
     display:flex;
     flex-direction:column;
@@ -406,26 +404,27 @@ nav#nav{
     justify-content: start;
     align-items: center;
 
-    padding: 0 .5rem;
+    padding: 0;
+
+    position:Relative;
 }
 
 #date-container{
     display:flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
 
     background:var(--primary-bg);
 
-    width:50px;
-    height:50px;
-
-    border-radius: 8px;
+    width:75px;
+    height:75px;
 
     padding:.25rem;
 
 }
-#date-container > p,#date-container > h4{
+#date-container > p,#date-container > h4,
+#time-container > p{
     color:var(--primary-color);
 }
 .si-list-item > p{
@@ -434,6 +433,24 @@ nav#nav{
 .si-list-item > h4{
     font-size:18pt;
 }
+
+#time-container > p {
+    font-size:11pt;
+}
+
+#time-container {
+    position:absolute;
+    right:0;
+    top:0;
+
+    padding:.5rem;
+    
+    background:var(--primary-bg);
+
+    border-radius:0 0 0 6px;
+
+}
+
 /* ______________________________ */
 
 /* datetime */

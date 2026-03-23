@@ -55,6 +55,8 @@ for(let i in inputs){
         if(target){
             let value = target.value;
 
+            console.log(value)
+            
             // check if both values are selected
             if(Object.values(inputs).every(input => input.value)) {
                 console.log('both items are selected')
