@@ -34,9 +34,6 @@
             <!-- gallery -->
                 <li class="nav-list-item"><a href="#rwk-gallery" class="nav-list-link">Gallery</a></li>
                 
-            <!-- join us -->
-                <li class="nav-list-item"><a href="#rwk-runwalk" class="nav-list-link">Run/Walk</a></li>
-
             <!-- contact -->
                 <li class="nav-list-item"><a href="#rwk-contact" class="nav-list-link">Contact</a></li>
 
@@ -53,9 +50,6 @@
             <!-- gallery -->
                 <li class="nav-list-item"><a href="#rwk-gallery" class="nav-list-link">Gallery</a></li>
                 
-            <!-- join us -->
-                <li class="nav-list-item"><a href="#rwk-runwalk" class="nav-list-link">Run/Walk</a></li>
-
             <!-- contact -->
                 <li class="nav-list-item"><a href="#rwk-contact" class="nav-list-link">Contact</a></li>
 
@@ -145,9 +139,9 @@
         </ul>
 
         <!-- set date and time -->
-        <div id="input-container" class="no-pointer">
+        <div id="input-container">
             
-            <input type="date" name="scheduled-date" id="scheduled-date" required>
+            <input type="date" name="scheduled-date" id="scheduled-date" class="grayed-out no-pointer" required>
 
              <input
             type="time"
@@ -155,9 +149,12 @@
             name="appointment-time"
             min="09:00"
             max="18:00"
+            class="grayed-out no-pointer"
             required />
 
             <span id="datetime-submit" class="no-display">Submit</span>
+
+            <em class="cta-schedule"><a class="auth" href="/login">Login</a> or <a class="auth" href="/register">register</a> to save your own!</em>
         </div>
     </section>
 
@@ -166,14 +163,11 @@
 
     </section>
 
-    <!-- run/walk -->
-    <section id="rwk-runwalk">
-
-    </section>
-
 
     <!-- contact / help -->
-    <section id="rwk-contact"></section>
+    <section id="rwk-contact" class="section-column">
+        <h3 class="section-column-label">Gallery</h3>
+    </section>
 
     <script type="module" src="main.js"> </script>
 </body>
