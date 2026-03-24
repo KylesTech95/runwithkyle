@@ -65,7 +65,7 @@ for(let i in inputs){
 
 
                 datetime_submit.onclick = () => handleDatetimeSubmit(inputs)
-                
+
             } else {
                 console.log('waiting on an item')
                 // submit disappears
@@ -77,13 +77,12 @@ for(let i in inputs){
 
 
 
-
 /*================================================== */
 // testing site
 
 // onkeydown
 // remove an item from schedule
-    window.onkeydown = handle_schedule_item_removal
+    // window.onkeydown = handle_schedule_item_removal
 
 /*================================================== */
 
@@ -218,8 +217,30 @@ function handleDatetimeSubmit(inputs){
     inputs.date.value = ''
     inputs.time.value = ''
 
+
+    // handle removal of item
+    let remove_buttons = [...shedule_list_container.children]
+    
+    console.log(remove_buttons)
+
+    for(let i = 0; i < remove_buttons.length; i++) {
+        let rm_btn = [...remove_buttons[i].children].find(x => x.classList.contains('remove-button'));
+
+        // click on item
+        rm_btn.onclick = (e) => {
+            const parent = e.target.parentElement;
+
+            // get current index
+            let getIndex = [...document.querySelectorAll('.si-list-item')].indexOf(parent)
+
+            // remove items
+            remove_buttons = removeItem(shedule_list_container, getIndex);
+
+        }
+    }
+
     // return 
-    return true;
+    // return true;
 }
 // remove submit
 function removeSubmit() {
@@ -244,6 +265,11 @@ function removeItem(container,index){
 
     // replace children
     container.replaceChildren(...current)
+
+    console.log(container)
+    console.log(container.children)
+
+    return current
 }
 // test - handle schedule item removal with keydown (testing site)
 function handle_schedule_item_removal(e) {
@@ -259,5 +285,4 @@ function handle_schedule_item_removal(e) {
             }
         }
 }
-
 navToggleContainer.onclick = toggleNav;

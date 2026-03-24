@@ -409,6 +409,23 @@ nav#nav{
     gap:.25rem;
 
 }
+.remove-button:hover {
+    cursor:pointer;
+}
+.remove-button {
+    position:absolute;
+    bottom:0;
+    right:0;
+
+    padding:0 .5rem;
+
+    border: .5px solid #fff;
+
+
+    background:var(--primary-bg);
+
+    color: var(--alert-color);
+}
 .si-list-item {
 
     width: 97%;
@@ -544,5 +561,4 @@ nav#nav{
 }
 .lc-red {
     background-color:red;
-
 }

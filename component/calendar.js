@@ -40,6 +40,9 @@ export default function generateCalendarListItem(datetime) {
     // 2. time container contents
     const hours_minutes_seconds = document.createElement('p')
 
+    // 3. remove / delete button
+    const remove_button = document.createElement('span');
+
     // ||
     // ||
     // \/
@@ -47,6 +50,9 @@ export default function generateCalendarListItem(datetime) {
     // add text to datetime vars
     month.textContent = getMonth(m);
     day.textContent = d
+
+    // remove button textcontent
+    remove_button.textContent = 'X'
 
     // take the array given above > split and join with :
     // let hms = [h,min,s].join`:` + ` ${morning_or_evening}`
@@ -66,6 +72,7 @@ export default function generateCalendarListItem(datetime) {
 
     list_item.append(dateContainer)
     list_item.append(timeContainer)
+    list_item.append(remove_button)
 
     console.log(dateContainer)
 
@@ -78,7 +85,7 @@ export default function generateCalendarListItem(datetime) {
     dateContainer.setAttribute('id','date-container')
     timeContainer.setAttribute('id','time-container')
 
-
+    remove_button.classList.add('remove-button')
     list_item.classList.add('si-list-item');
 
     return list_item;
