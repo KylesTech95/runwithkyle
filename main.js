@@ -46,7 +46,6 @@ const navigation_commander = {
 // control
 inputs.date.setAttribute('min', convertTime(Date.now()).date)
 
-
 // oninputs
 for(let i in inputs){
     inputs[i].oninput = e => {
@@ -79,17 +78,15 @@ for(let i in inputs){
 
 
 
-
-
-
-
-
 /*================================================== */
 // testing site
 
-
+// onkeydown
+// remove an item from schedule
+    window.onkeydown = handle_schedule_item_removal
 
 /*================================================== */
+
 
 // functions
 // toggle navigation (mobile)
@@ -152,7 +149,7 @@ function convertTime(num){ // integer
     const date = `${year}-${month}-${day}`;
     const time = `${hours}:${minutes}:${seconds}`;
 
-    return {date:date,time:time}
+    return {date:date,time:time, int:num}
 }
 // get month
 export function getMonth(num){
@@ -199,6 +196,7 @@ function handleDatetimeSubmit(inputs){
     // store new datetime in variable
     const newDateTime = new Date(str).getTime();
 
+    console.log("TIME STR",newDateTime)
     // convert datetime to object {date,time}
     const get_datetime = convertTime(newDateTime);
 
@@ -207,6 +205,13 @@ function handleDatetimeSubmit(inputs){
     let listitem = generateCalendarListItem(get_datetime);
     shedule_list_container.appendChild(listitem) // append listitem to ul
 
+    // sort schedule container
+    let current_children = [...shedule_list_container.children];
+    let sort_children = [...current_children].sort((a,b) => {
+        return +a.getAttribute('--data-datetime') - +b.getAttribute('--data-datetime')
+    })
+    // replace children with sorted
+    shedule_list_container.replaceChildren(...sort_children)
 
     // garbage / trash
     removeSubmit()
@@ -216,13 +221,43 @@ function handleDatetimeSubmit(inputs){
     // return 
     return true;
 }
-
-
+// remove submit
 function removeSubmit() {
     datetime_submit.classList.add('no-display')
 }
-
+// add submit
 function addSubmit() {
     datetime_submit.classList.remove('no-display')
 }
+// remove item from container
+function removeItem(container,index){
+    if(!container || (!index && index !== 0)) {
+        console.error('no arguments. check again')
+        return;
+    }
+
+    // target current children
+    let current = [...container.children];
+
+    // splice
+    current.splice(index,1);
+
+    // replace children
+    container.replaceChildren(...current)
+}
+// test - handle schedule item removal with keydown (testing site)
+function handle_schedule_item_removal(e) {
+        if(shedule_list_container.children.length < 1){
+            console.warn('handle_schedule_item_removal: Pending children')
+        }
+        let key = e.key;
+        if(shedule_list_container.children){
+             if(/[0-9]/.test(key)){
+                removeItem(shedule_list_container, +key)
+            } else {
+                console.warn('select an integer')
+            }
+        }
+}
+
 navToggleContainer.onclick = toggleNav;

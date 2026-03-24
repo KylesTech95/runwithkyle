@@ -1,7 +1,7 @@
 import { getMonth } from "../main.js";
 export default function generateCalendarListItem(datetime) {
     console.log(datetime)
-    let {date,time} = datetime;
+    let {date,time,int} = datetime;
     
     // date data
     let [y,m,d] = date.split`-`
@@ -74,6 +74,7 @@ export default function generateCalendarListItem(datetime) {
     // \/
 
     // Add classes / setAttribute to elements
+    list_item.setAttribute('--data-datetime', int)
     dateContainer.setAttribute('id','date-container')
     timeContainer.setAttribute('id','time-container')
 

@@ -1,9 +1,20 @@
 /* Extra Small Mobile (Portrait - 320px to 480px) */
 @media only screen and (max-width: 480px) {
+    .legend-label {
+        font-weight: bold;
+        font-size:9pt;
+    }
     .blank-section{
         height:150px;
     }
-    
+    .cta-schedule {
+        text-align: right;
+        font-size:9pt;
+    }
+
+    #legend-title {
+        letter-spacing:1.5px;
+    }
     .section-column{
     border-bottom: 5.5px solid var(--primary-color);
     
@@ -54,6 +65,10 @@
 
 
 @media only screen and (min-width:680px) and (max-width: 915px) {
+    .legend-label {
+        font-weight: bold;
+        font-size:9pt;
+    }
     .blank-section{
         height:150px;
     }
