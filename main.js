@@ -29,7 +29,8 @@ const months = {
 }
 const inputs = {
     date:document.getElementById('scheduled-date'),
-    time:document.getElementById('appointment-time')
+    time:document.getElementById('appointment-time'),
+    select:document.getElementById('run-or-walk'),
 }
 const object = {
     error:'object is not present',
@@ -48,6 +49,7 @@ inputs.date.setAttribute('min', convertTime(Date.now()).date)
 
 // oninputs
 for(let i in inputs){
+
     inputs[i].oninput = e => {
         let target = e.target || undefined;
         
@@ -195,9 +197,10 @@ function handleDatetimeSubmit(inputs){
     // store new datetime in variable
     const newDateTime = new Date(str).getTime();
 
-    console.log("TIME STR",newDateTime)
+    console.log("TIME STR", newDateTime)
     // convert datetime to object {date,time}
-    const get_datetime = convertTime(newDateTime);
+    let get_datetime = convertTime(newDateTime);
+    get_datetime = {...get_datetime,...{type:inputs.select.value}}
 
 
     // generate list item
@@ -216,6 +219,7 @@ function handleDatetimeSubmit(inputs){
     removeSubmit()
     inputs.date.value = ''
     inputs.time.value = ''
+    inputs.select.value = ''
 
 
     // handle removal of item

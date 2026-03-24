@@ -1,7 +1,7 @@
 import { getMonth } from "../main.js";
 export default function generateCalendarListItem(datetime) {
     console.log(datetime)
-    let {date,time,int} = datetime;
+    let {date,time,int,type} = datetime;
     
     // date data
     let [y,m,d] = date.split`-`
@@ -30,7 +30,7 @@ export default function generateCalendarListItem(datetime) {
     // \/
 
     // containers
-    const [dateContainer,timeContainer] = [document.createElement('div'),document.createElement('div')]
+    const [dateContainer,timeContainer,typeContainer] = [document.createElement('div'),document.createElement('div'),document.createElement('div')]
 
     // contents within containers
 
@@ -43,6 +43,9 @@ export default function generateCalendarListItem(datetime) {
     // 3. remove / delete button
     const remove_button = document.createElement('span');
 
+    // 4. type (run walk jog)
+    const get_type = document.createElement('h4')
+
     // ||
     // ||
     // \/
@@ -51,8 +54,11 @@ export default function generateCalendarListItem(datetime) {
     month.textContent = getMonth(m);
     day.textContent = d
 
+    // type textcontent
+    get_type.textContent = type;
+
     // remove button textcontent
-    remove_button.textContent = 'X'
+    remove_button.textContent = 'X';
 
     // take the array given above > split and join with :
     // let hms = [h,min,s].join`:` + ` ${morning_or_evening}`
@@ -70,11 +76,12 @@ export default function generateCalendarListItem(datetime) {
 
     timeContainer.append(hours_minutes_seconds)
 
+    typeContainer.append(get_type)
+
     list_item.append(dateContainer)
+    list_item.append(typeContainer)
     list_item.append(timeContainer)
     list_item.append(remove_button)
-
-    console.log(dateContainer)
 
     // ||
     // ||
@@ -84,6 +91,7 @@ export default function generateCalendarListItem(datetime) {
     list_item.setAttribute('--data-datetime', int)
     dateContainer.setAttribute('id','date-container')
     timeContainer.setAttribute('id','time-container')
+    typeContainer.setAttribute('id','type-container')
 
     remove_button.classList.add('remove-button')
     list_item.classList.add('si-list-item');

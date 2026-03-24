@@ -4,6 +4,13 @@
         font-weight: bold;
         font-size:9pt;
     }
+    #datetime-submit {
+        font-size:9pt;
+    }
+
+    #input-container{
+        gap:4px;
+    }
     .blank-section{
         height:150px;
     }

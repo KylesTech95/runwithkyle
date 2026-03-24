@@ -440,13 +440,16 @@ nav#nav{
     display:flex;
     justify-content: start;
     align-items: center;
+    gap:1px;
 
     padding: 0;
 
     position:Relative;
+
+    border:2px solid #000;
 }
 
-#date-container{
+#date-container, #type-container {
     display:flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -454,14 +457,16 @@ nav#nav{
 
     background:var(--primary-bg);
 
-    width:50px;
-    height:50px;
+    width:55px;
+    height:55px;
 
     padding:.25rem;
 
 }
-#date-container > p,#date-container > h4,
-#time-container > p{
+#date-container > p,
+#date-container > h4,
+#time-container > p,
+#type-container > h4{
     color:var(--primary-color);
 }
 .si-list-item > p{
@@ -493,13 +498,21 @@ nav#nav{
 /* datetime */
 
 #input-container{
+    overflow: hidden;
+    
     width:100%;
+
+    border:2px solid #000;
+
     background:var(--primary-bg );
     padding:6px;
+
     display:flex;
     justify-content: start;
     align-items: center;
     gap:.5rem;
+
+    margin-top:.5rem;
 }
 
 #datetime-submit{
