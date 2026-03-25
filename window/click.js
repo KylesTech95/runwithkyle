@@ -1,5 +1,5 @@
-import { exitModal } from "../modal.js";
-import { modal_enabled } from "../../main.js";
+import { exitModal } from "../component/modal.js";
+import { modal_enabled } from "../main.js";
 const modal = document.getElementById('modal-container')
 
 // main function 

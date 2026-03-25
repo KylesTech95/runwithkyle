@@ -1,5 +1,8 @@
-// function to access modal
-// args: (type, options = {calendar:{li:undefined}})
+// Rules
+// all contents within a modal will be stored within a div#modal-content-div element
+
+/* ------------------------------------------- */
+
 const modal = document.getElementById('modal-container')
 const body = document.body;
 const wrapper = document.getElementById('wrapper')
@@ -12,8 +15,9 @@ export default function view_modal(type, options = {calendar:{li:undefined}}) {
         return;
     }
 
-    viewModal()
-    appendExit()
+    viewModal() // view modal
+    clearModal() // clear modal of previous items
+    appendExit() // append exit
     
 
     switch(true) {
@@ -22,14 +26,9 @@ export default function view_modal(type, options = {calendar:{li:undefined}}) {
             console.warn('options.calendar.li: check object / element');
             return;
         }
-        
         // process calendar item
         processCalendarItem(options.calendar.li);
         
-        // window click 
-        window.onclick = e => global_window_click(e,window_type)
-            
-        console.log('view calendar item here !')
         break;
 
 
@@ -47,6 +46,30 @@ export default function view_modal(type, options = {calendar:{li:undefined}}) {
 
         default: console.log(undefined)
         break;
+    }
+}
+
+function clearModal() {
+    if(modal && !modal.classList.contains('no-display')) {
+
+        // if modal has children
+        if(modal.children) {
+            
+            console.log(modal.children)
+            let div_element = [...modal.children].find(child => child.id === 'modal-content-div'); // store child as div
+
+            // if div exists
+            if(div_element && div_element.children){
+                // remove children
+                return [...div_element.children].map(x => x.remove());
+            } else {
+                console.log('div_element does not have any children');
+                return false;
+            }
+        } else {
+            console.log('modal does not need to be cleared at this time')
+            return false;
+        }
     }
 }
 
