@@ -142,7 +142,7 @@ function toggleNav(e) {
     }
 }
 // convert time from date.now() to m/d/time/etc...
-function convertTime(num){ // integer
+export function convertTime(num){ // integer
     const newDate = new Date(num);
     const [year, day, month] = [newDate.getUTCFullYear(), newDate.getDate(), (+newDate.getMonth() < 10 ? `0${+newDate.getMonth() + 1}` : +newDate.getMonth() + 1)]
     const [hours,minutes,seconds] = [newDate.getHours(), newDate.getMinutes(), newDate.getSeconds()];

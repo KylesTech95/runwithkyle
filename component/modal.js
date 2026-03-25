@@ -1,6 +1,4 @@
-// Rules
-// all contents within a modal will be stored within a div#modal-content-div element
-
+import { convertTime } from "../main.js";
 /* ------------------------------------------- */
 
 const modal = document.getElementById('modal-container')
@@ -18,7 +16,7 @@ export default function view_modal(type, options = {calendar:{li:undefined}}) {
     viewModal() // view modal
     clearModal() // clear modal of previous items
     appendExit() // append exit
-    
+    activateTemplate(type) // template
 
     switch(true) {
         case type == 'calendar':
@@ -72,7 +70,6 @@ function clearModal() {
         }
     }
 }
-
 function viewModal() {
     if(modal.classList.contains('no-display')){
         // modal appears
@@ -118,4 +115,72 @@ if(!modal.classList.contains('no-display')){
 
 function processCalendarItem(element) {
     console.log(element)
+    const datetime = element.getAttribute('--data-datetime'); // get datetime from li
+    const datetime_obj = convertTime(datetime); // get time info
+
+    // iterate through calendar labels
+    let cal_label = [...document.querySelectorAll('.cal-label')];
+    
+    for(let i = 0; i < cal_label.length; i++){
+        let parent = cal_label[i].parentElement;
+        let sib = [...parent.children].find(ch => ch.classList.contains('cal-answer'));
+
+        // if what
+        if(sib && /what/gi.test(cal_label[i].textContent) && parent.id === 'cal-what') {
+            let typecontainer = [...element.children].find(d => d.id==='type-container');
+            console.log(typecontainer)
+            if(typecontainer) {
+                let type_h4 = typecontainer.children[0];
+                let type_h4_text = type_h4.textContent;
+                
+                sib.textContent = type_h4_text
+            }
+        }
+
+        if(sib && /when/gi.test(cal_label[i].textContent) && parent.id === 'cal-when') {
+            let datecontainer = [...element.children].find(d => d.id==='date-container');
+            let timecontainer = [...element.children].find(d => d.id==='time-container');
+            console.log(datecontainer)
+            if(datecontainer) {
+                let type_h4 = datecontainer.children[0];
+                let type_day = datecontainer.children[1];
+                let clock_time = timecontainer.children[0];
+
+                
+                let type_h4_text = `${type_h4.textContent} ${type_day.textContent}, ${clock_time.textContent}`;
+                
+                sib.textContent = type_h4_text;
+            }
+        }
+
+        // how / how many
+        if(sib && /who/gi.test(cal_label[i].textContent) && parent.id === 'cal-who') {
+            let min = 1;
+
+            // fetch users who joined
+            let users_joined = fetch('/event_id/reserve/accepted').then(d => +d['accepted']||0)
+            .catch(err => new Error(err));
+
+            if(users_joined && typeof(users_joined) === 'number'){
+                min += users_joined
+            }
+
+            sib.textContent = min
+        }
+        
+    }
+    
+
+
+}
+
+function activateTemplate(type) {
+    const templates = [...document.querySelectorAll('.modal-template')]
+    templates.forEach(t => t.classList.add('no-display'))
+
+
+    const findTemp = templates.find(t => t.getAttribute('--data-type') === type);
+
+    if(findTemp) findTemp.classList.remove('no-display');
+    return;
 }
