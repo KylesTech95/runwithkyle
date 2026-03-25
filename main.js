@@ -1,6 +1,6 @@
 // imports
 import generateCalendarListItem from "./component/calendar.js";
-
+import view_modal from "./component/modal.js";
 
 // vars (variables)
 const navToggleContainer = document.getElementById('nav-toggle-container')
@@ -10,6 +10,9 @@ const mobile_nav_open = 'mobile-nav-open';
 const shedule_list_container = document.getElementById('scheduled-item-list-container')
 const datetime_submit = document.getElementById('datetime-submit')
 const maxBars = 2;
+const window_type = 'general'
+
+export let modal_enabled = false;
 
 
 // object data
@@ -66,7 +69,7 @@ for(let i in inputs){
                 addSubmit()
 
 
-                datetime_submit.onclick = () => handleDatetimeSubmit(inputs)
+                datetime_submit.onclick = () => scheduleExercise(inputs)
 
             } else {
                 console.log('waiting on an item')
@@ -77,14 +80,11 @@ for(let i in inputs){
     }
 }
 
-
-
 /*================================================== */
 // testing site
 
 // onkeydown
 // remove an item from schedule
-    // window.onkeydown = handle_schedule_item_removal
 
 /*================================================== */
 
@@ -182,7 +182,7 @@ export function getMonth(num){
 
 }
 // submit date/time onclick 
-function handleDatetimeSubmit(inputs){
+function scheduleExercise(inputs){
     let str = '';
     
     // check if values are present
@@ -215,6 +215,11 @@ function handleDatetimeSubmit(inputs){
     // replace children with sorted
     shedule_list_container.replaceChildren(...sort_children)
 
+    // enable clients to view an exercise
+    reviewExercise(sort_children)
+
+
+
     // garbage / trash
     removeSubmit()
     inputs.date.value = ''
@@ -234,6 +239,8 @@ function handleDatetimeSubmit(inputs){
         rm_btn.onclick = (e) => {
             const parent = e.target.parentElement;
 
+            parent.onclick = null;
+
             // get current index
             let getIndex = [...document.querySelectorAll('.si-list-item')].indexOf(parent)
 
@@ -243,6 +250,7 @@ function handleDatetimeSubmit(inputs){
         }
     }
 
+    
     // return 
     // return true;
 }
@@ -288,5 +296,17 @@ function handle_schedule_item_removal(e) {
                 console.warn('select an integer')
             }
         }
+}
+// click on an exercise
+function reviewExercise(arr){
+
+    for(let i = 0;  i < arr.length; i++) {
+        // click on exercise
+        arr[i].onclick = () => {
+            // view modal
+            view_modal('calendar',{calendar:{li:arr[i]}})
+            modal_enabled = true;
+        }
+    }
 }
 navToggleContainer.onclick = toggleNav;

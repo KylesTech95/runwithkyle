@@ -62,7 +62,7 @@ export default function generateCalendarListItem(datetime) {
 
     // take the array given above > split and join with :
     // let hms = [h,min,s].join`:` + ` ${morning_or_evening}`
-    let hms = [h,min].join`:` + ` ${morning_or_evening}`
+    let hms = [h,+min < 10 ? '0'+min : min].join`:` + ` ${morning_or_evening}`
 
     hours_minutes_seconds.textContent = hms;
 
@@ -88,6 +88,10 @@ export default function generateCalendarListItem(datetime) {
     // \/
 
     // Add classes / setAttribute to elements
+    dateContainer.classList.add('no-pointer')
+    timeContainer.classList.add('no-pointer')
+    typeContainer.classList.add('no-pointer')
+
     list_item.setAttribute('--data-datetime', int)
     dateContainer.setAttribute('id','date-container')
     timeContainer.setAttribute('id','time-container')
@@ -99,29 +103,3 @@ export default function generateCalendarListItem(datetime) {
     return list_item;
 
 }
-{/* <ul id="scheduled-item-list-container">
-            <li class="si-list-item">
-                <div id="date-container">
-                    <p>MAY</p>
-                    <h4>15</h4>
-                </div>
-            </li>
-            <li class="si-list-item">
-                <div id="date-container">
-                    <p>Jun</p>
-                    <h4>4</h4>
-                </div>
-            </li>
-            <li class="si-list-item">
-                <div id="date-container">
-                    <p>Jul</p>
-                    <h4>11</h4>
-                </div>
-            </li>
-            <li class="si-list-item">
-                <div id="date-container">
-                    <p>Aug</p>
-                    <h4>8</h4>
-                </div>
-            </li>
-        </ul> */}

@@ -64,7 +64,7 @@
     :root{
     --primary-bg: #000;
     --secondary-bg: #fff;
-    --tertiary-color:cyan;
+    --tertiary-color:var(--notice-color);
 
     --primary-column-bg:rgba(114, 162, 114, 0.692);;
     --secondary-column-bg:#333;
@@ -99,6 +99,8 @@
 
 /* body */
 body {
+    transition: .5s;
+
     background-color: var(--primary-bg);
     
     padding: 0 1.25rem;
@@ -191,6 +193,7 @@ nav#nav{
 /* ul nav listcontainer mobile */
 #nav-list-container-mobile {
         background:var(--primary-bg);
+        
         display:none;
 
         flex-direction: column;
@@ -311,6 +314,9 @@ nav#nav{
 
 /* general */
 /* ______________________________ */
+.stale-body{
+    filter:blur(1.25px) !important;
+}
 .lh-sm{
     line-height: 1rem;
 }
@@ -425,6 +431,10 @@ nav#nav{
     background:var(--primary-bg);
 
     color: var(--alert-color);
+}
+.si-list-item:hover {
+    cursor: pointer;
+    transform:scale(.98);
 }
 .si-list-item {
 
@@ -574,4 +584,36 @@ nav#nav{
 }
 .lc-red {
     background-color:red;
+}
+
+/* modal */
+
+section#modal-container {
+    height:75%;
+    width:75%;
+
+    background-color: var(--primary-bg);
+
+    border:2px solid var(--border-secondary);
+
+    position:fixed;
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    z-index:999;
+}
+
+/* exit modal */
+
+#modal-exit:hover {
+    cursor:pointer;
+}
+#modal-exit{
+    position:fixed;
+    top:10px;
+    right:10px;
+    font-size:21pt;
+    color:#f00;
 }

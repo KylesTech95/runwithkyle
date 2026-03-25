@@ -7,7 +7,13 @@
     <link rel="stylesheet" href="query.css">
     <title>Run with Kyle</title>
 </head>
+
 <body>
+
+    <!-- modal -->
+    <section id="modal-container" class="no-display"></section>
+
+    <div id="wrapper">
     <!-- header -->
     <header>
         <!-- logo -->
@@ -201,7 +207,7 @@
             class="grayed-out no-pointer"
             required />
 
-            <select name="rwk-options" id="run-or-walk">
+            <select name="rwk-options" id="run-or-walk" class="grayed-out no-pointer">
                 <option value=""></option>
                 <option value="0">Walk</option>
                 <option value="1">Jog</option>
@@ -224,6 +230,9 @@
     <section id="rwk-contact" class="section-column">
         <h3 class="section-column-label">Gallery</h3>
     </section>
+
+    </div>
+    
 
     <script type="module" src="main.js"> </script>
 </body>
