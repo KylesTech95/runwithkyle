@@ -125,8 +125,22 @@ function processCalendarItem(element) {
         let parent = cal_label[i].parentElement;
         let sib = [...parent.children].find(ch => ch.classList.contains('cal-answer'));
 
-        // if what
-        if(sib && /what/gi.test(cal_label[i].textContent) && parent.id === 'cal-what') {
+        // if distance
+        if(sib && /distance/gi.test(cal_label[i].textContent) && parent.id === 'cal-distance') {
+            let distContainer = [...element.children].find(d => d.id==='distance-container');
+            console.log(distContainer)
+            if(distContainer) {
+                let type_h4 = distContainer.children[0];
+                let type_distance = distContainer.children[1];
+                
+                let type_h4_text = `${type_h4.textContent} ${type_distance.textContent}`;
+
+                sib.textContent = type_h4_text
+            }
+        }
+
+        // if how
+        if(sib && /how/gi.test(cal_label[i].textContent) && parent.id === 'cal-how') {
             let typecontainer = [...element.children].find(d => d.id==='type-container');
             console.log(typecontainer)
             if(typecontainer) {

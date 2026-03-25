@@ -15,12 +15,12 @@
         
         <!-- modal templates -->
     <div class="modal-template no-display" --data-type="calendar" id="calendar-modal-template">
-        <div class="calendar-div" id="cal-what">
-            <h3 class="cal-label">What</h3>
+        <div class="calendar-div" id="cal-distance">
+            <h3 class="cal-label">Distance</h3>
             <p class="cal-answer"></p>
         </div>
-        <div class="calendar-div" id="cal-why">
-            <h3 class="cal-label">Why</h3>
+        <div class="calendar-div" id="cal-how">
+            <h3 class="cal-label">How</h3>
             <p class="cal-answer"></p>
 
         </div>
@@ -187,10 +187,18 @@
             max="18:00"
             required />
 
+            <!-- distance -->
+             <input type="number" name="rwk-distance" id="rwk-distance-input" min=".25" placeholder="Distance" required>
+
+             <select name="rwk-options" id="distance-type" class="" required>
+                <option value="miles">miles</option>
+                <option value="meters">meters</option>
+                <option value="kilometers">kilometers</option>
+            </select>
+
             <select name="rwk-options" id="run-or-walk">
-                <option value=""></option>
-                <option value="Walk">Walk</option>
                 <option value="Jog">Jog</option>
+                <option value="Walk">Walk</option>
                 <option value="Run">Run</option>
             </select>
             
@@ -230,19 +238,26 @@
         <!-- set date and time -->
         <div id="input-container">
             
-            <input type="date" name="scheduled-date" id="scheduled-date" class="grayed-out no-pointer" required>
+            <input type="date" id="scheduled-date" class="grayed-out no-pointer" required>
 
              <input
             type="time"
             id="appointment-time"
-            name="appointment-time"
             min="09:00"
             max="18:00"
             class="grayed-out no-pointer"
             required />
 
-            <select name="rwk-options" id="run-or-walk" class="grayed-out no-pointer">
-                <option value=""></option>
+            <!-- distance -->
+             <input type="number" id="rwk-distance-input-client" min=".25" class="grayed-out no-pointer" placeholder="Distance" required>
+             
+             <select id="distance-type" class="grayed-out no-pointer" required>
+                <option value="kilometers">kilometers</option>
+                <option value="meters">meters</option>
+                <option value="miles">miles</option>
+            </select>
+
+            <select id="run-or-walk" class="grayed-out no-pointer">
                 <option value="0">Walk</option>
                 <option value="1">Jog</option>
                 <option value="2">Run</option>
@@ -250,8 +265,8 @@
 
             <span id="datetime-submit" class="no-display">Submit</span>
 
-            <em class="cta-schedule"><a class="auth" href="/login">Login</a> or <a class="auth" href="/register">register</a> to save your own!</em>
         </div>
+        <em class="cta-schedule"><a class="auth" href="/login">Login</a> or <a class="auth" href="/register">register</a> to save your own!</em>
     </section>
 
     <!-- gallery -->

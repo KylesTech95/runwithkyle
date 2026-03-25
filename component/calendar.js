@@ -1,7 +1,7 @@
 import { getMonth } from "../main.js";
 export default function generateCalendarListItem(datetime) {
     console.log(datetime)
-    let {date,time,int,type} = datetime;
+    let {date,time,int,type,distance} = datetime;
     
     // date data
     let [y,m,d] = date.split`-`
@@ -30,7 +30,7 @@ export default function generateCalendarListItem(datetime) {
     // \/
 
     // containers
-    const [dateContainer,timeContainer,typeContainer] = [document.createElement('div'),document.createElement('div'),document.createElement('div')]
+    const [dateContainer,timeContainer,typeContainer, distanceContainer] = [document.createElement('div'),document.createElement('div'),document.createElement('div'),document.createElement('div')]
 
     // contents within containers
 
@@ -46,6 +46,10 @@ export default function generateCalendarListItem(datetime) {
     // 4. type (run walk jog)
     const get_type = document.createElement('h4')
 
+    // 5. distance
+    const distance1 = document.createElement('h4')
+    const distanceType = document.createElement('p')
+
     // ||
     // ||
     // \/
@@ -56,6 +60,10 @@ export default function generateCalendarListItem(datetime) {
 
     // type textcontent
     get_type.textContent = type;
+
+    // distance
+    distance1.textContent = distance.split` `[0]
+    distanceType.textContent = distance.split` `[1]
 
     // remove button textcontent
     remove_button.textContent = 'X';
@@ -74,12 +82,16 @@ export default function generateCalendarListItem(datetime) {
     dateContainer.append(month)
     dateContainer.append(day)
 
+    distanceContainer.append(distance1)
+    distanceContainer.append(distanceType)
+
     timeContainer.append(hours_minutes_seconds)
 
     typeContainer.append(get_type)
 
     list_item.append(dateContainer)
     list_item.append(typeContainer)
+    list_item.append(distanceContainer)
     list_item.append(timeContainer)
     list_item.append(remove_button)
 
@@ -94,6 +106,7 @@ export default function generateCalendarListItem(datetime) {
 
     list_item.setAttribute('--data-datetime', int)
     dateContainer.setAttribute('id','date-container')
+    distanceContainer.setAttribute('id','distance-container')
     timeContainer.setAttribute('id','time-container')
     typeContainer.setAttribute('id','type-container')
 

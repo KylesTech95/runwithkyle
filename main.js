@@ -34,6 +34,8 @@ const inputs = {
     date:document.getElementById('scheduled-date'),
     time:document.getElementById('appointment-time'),
     select:document.getElementById('run-or-walk'),
+    distance:document.getElementById("rwk-distance-input"),
+    distance_type:document.getElementById("distance-type")
 }
 const object = {
     error:'object is not present',
@@ -63,7 +65,7 @@ for(let i in inputs){
             
             // check if both values are selected
             if(Object.values(inputs).every(input => input.value)) {
-                console.log('both items are selected')
+                console.log('all items are selected')
 
                 // submit appears
                 addSubmit()
@@ -200,7 +202,7 @@ function scheduleExercise(inputs){
     console.log("TIME STR", newDateTime)
     // convert datetime to object {date,time}
     let get_datetime = convertTime(newDateTime);
-    get_datetime = {...get_datetime,...{type:inputs.select.value}}
+    get_datetime = {...get_datetime,...{type:inputs.select.value, distance:`${inputs.distance.value} ${inputs.distance_type.value}`}}
 
 
     // generate list item
