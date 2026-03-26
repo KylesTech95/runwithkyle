@@ -50,9 +50,10 @@ const time_constraints = {
 }
 export default function detectTimeChange(){
   if(document.querySelectorAll('.si-list-item') && document.querySelectorAll('.si-list-item').length > 0){
-    let siS = [...document.querySelectorAll('.si-list-item')];
-
+    let siS = [...document.querySelectorAll('.si-list-item')].filter(x => !x.classList.contains('bg-red'));
+    console.log(siS)
     siS.forEach(s => {
+      
         updateItem(s, 'pending')
 
         let datetime = +s.getAttribute('--data-datetime');
@@ -105,7 +106,11 @@ function handleTimeConstraints(obj,li) {
 
       if(!seconds || seconds < 1) {
       // handletimeout
-        updateItem(li, 'in-progress')
+        let li_list = [...li.parentElement.children];
+        li_list.filter(l => {
+          console.log(l.classList.contains('bg-green'))
+          return l.classList.contains('bg-green')
+        }).length < 1 ? updateItem(li,'in-progress') : updateItem(li, 'pending') 
       } else {
         // handle seconds (only)
       }
@@ -126,7 +131,10 @@ function handleTimeConstraints(obj,li) {
   }
 }
 
-function updateItem(element, status) {
+export function updateItem(element, status) {
+      const camera = [...element.children].find(child => child.classList.contains('camera-btn'))
+      const reservations = [...element.children].filter(child => /(leave|join)/gi.test(child.textContent))
+
   switch(true){
     case status === 'pending':
       element.classList.remove('bg-red')
@@ -141,18 +149,23 @@ function updateItem(element, status) {
       
       element.classList.add('bg-green')
 
+      element.classList.add('modal-active-view')
+
       // disable reservations (join and leave)
 
-      const reservations = [...element.children].filter(child => /(leave|join)/gi.test(child.textContent))
       reservations.map(r => r.classList.add('no-display'))
 
-
+      // add camera capabilities
+      camera.classList.remove('no-display')
     break;
     case status === 'completed':
       element.classList.remove('bg-green')
       element.classList.remove('bg-yellow')
+      element.classList.remove('modal-active-view')
       
       element.classList.add('bg-red')
+
+      camera.classList.add('no-display')
     break;
 
     default:

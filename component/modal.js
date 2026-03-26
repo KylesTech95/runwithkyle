@@ -1,4 +1,5 @@
 import { convertTime } from "../main.js";
+import { updateItem } from "../elapse.js";
 /* ------------------------------------------- */
 
 const modal = document.getElementById('modal-container')
@@ -26,6 +27,8 @@ export default function view_modal(type, options = {calendar:{li:undefined}}) {
         }
         // process calendar item
         processCalendarItem(options.calendar.li);
+        appendCompletion(options.calendar.li)
+
         
         break;
 
@@ -100,6 +103,20 @@ function appendExit() {
         return;
     }
 
+}
+function appendCompletion(element) {
+    if(document.querySelector('.completion-btn')) document.querySelector('.completion-btn').remove()
+    if(element){
+        const p = document.createElement('p')
+        if(element.classList.contains('modal-active-view')) {
+            p.classList.add('completion-btn')
+            p.textContent = 'Complete'
+
+            modal.append(p)
+
+            p.onclick = () => handleCompletion(element)
+        }
+    }
 }
 
 export function exitModal() {
@@ -192,4 +209,10 @@ function activateTemplate(type) {
 
     if(findTemp) findTemp.classList.remove('no-display');
     return;
+}
+
+function handleCompletion(element) {
+    // set li background to red
+    updateItem(element, 'completed')
+    exitModal()
 }

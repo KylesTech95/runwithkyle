@@ -515,7 +515,8 @@ nav#nav{
     background:red !important;
 }
 
-#date-container, #type-container, #distance-container, #distance-container, .reserve-btn {
+.camera-btn,#date-container, #type-container, #distance-container, #distance-container, 
+.reserve-btn {
     display:flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -529,16 +530,21 @@ nav#nav{
     padding:.25rem;
 
 }
+.camera-btn {
+    background:#fff !important;
+}
 #date-container > p,
 #date-container > h4,
 #distance-container > p,
 #distance-container > h4,
 #time-container > p,
 #type-container > h4,
+.camera-btn,
 .reserve-btn
 {
     color:var(--primary-color);
 }
+.camera-btn:hover,
 .reserve-btn:hover{
     text-decoration:underline;
     text-underline-offset: 2px;
@@ -668,7 +674,25 @@ nav#nav{
 }
 
 /* modal */
+.completion-btn{
+    color:#fff;
 
+
+    padding:.5rem;
+
+    font-size:11pt;
+    font-weight:bold;
+
+    background-color: var(--alert-color);
+
+    position:absolute;
+    top:6px;
+    left:50%;
+    transform:translate(-50%,0);
+}
+.completion-btn:hover{
+    cursor:pointer;
+}
 section#modal-container {
     /* height:75%; */
     padding:.25rem;

@@ -52,6 +52,9 @@ export default function generateCalendarListItem(datetime) {
     // 6. join and leave
     const reserve = {join: document.createElement('p'), leave: document.createElement('p')}
 
+    // 7. media
+    const media = {camera:document.createElement('img'),video:document.createElement('img')}
+
     // ||
     // ||
     // \/
@@ -67,6 +70,10 @@ export default function generateCalendarListItem(datetime) {
     const {join, leave} = reserve;
     join.textContent = 'JOIN'
     leave.textContent = 'LEAVE'
+
+    // media
+    const {camera} = media;
+    camera.src = `./media/camera.png`
 
     // distance
     distance1.textContent = distance.split` `[0]
@@ -100,6 +107,7 @@ export default function generateCalendarListItem(datetime) {
     list_item.append(typeContainer)
     list_item.append(distanceContainer)
     list_item.append(timeContainer)
+    list_item.append(camera)
     list_item.append(remove_button)
     list_item.append(join)
     list_item.append(leave)
@@ -116,6 +124,8 @@ export default function generateCalendarListItem(datetime) {
 
     join.classList.add('reserve-btn','join-btn')
     leave.classList.add('reserve-btn','leave-btn', 'grayed-out','no-display')
+
+    camera.classList.add('camera-btn', 'no-display')
 
     list_item.setAttribute('--data-datetime', int)
     dateContainer.setAttribute('id','date-container')
