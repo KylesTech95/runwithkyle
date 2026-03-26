@@ -67,8 +67,8 @@ for(let i in inputs){
                 // submit appears
                 addSubmit()
 
-
-                datetime_submit.onclick = () => scheduleExercise(inputs)
+                const sched_message = 'Add event to Schedule ?';
+                datetime_submit.onclick = () => confirm_prompt(sched_message).then(d => scheduleExercise(inputs))
 
             } else {
                 // submit disappears
@@ -316,15 +316,13 @@ function reviewExercise(arr){
 
 function confirm_prompt(question) {
     return new Promise((res,rej) => {
-
+        
         setTimeout(() => {
                 let confirmed = false;
 
                 if(confirm(question)) {
                     confirmed = true;
                 }
-
-                console.log(confirmed)
 
                 if (confirmed) {
                     res("Data successfully fetched!"); // Fulfills the promise with a value
