@@ -141,6 +141,12 @@ function updateItem(element, status) {
       
       element.classList.add('bg-green')
 
+      // disable reservations (join and leave)
+
+      const reservations = [...element.children].filter(child => /(leave|join)/gi.test(child.textContent))
+      reservations.map(r => r.classList.add('no-display'))
+
+
     break;
     case status === 'completed':
       element.classList.remove('bg-green')
