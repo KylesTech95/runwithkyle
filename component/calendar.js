@@ -1,6 +1,5 @@
 import { getMonth } from "../main.js";
 export default function generateCalendarListItem(datetime) {
-    console.log(datetime)
     let {date,time,int,type,distance} = datetime;
     
     // date data

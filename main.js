@@ -61,11 +61,8 @@ for(let i in inputs){
         if(target){
             let value = target.value;
 
-            console.log(value)
-            
             // check if both values are selected
             if(Object.values(inputs).every(input => input.value)) {
-                console.log('all items are selected')
 
                 // submit appears
                 addSubmit()
@@ -74,7 +71,6 @@ for(let i in inputs){
                 datetime_submit.onclick = () => scheduleExercise(inputs)
 
             } else {
-                console.log('waiting on an item')
                 // submit disappears
                 removeSubmit()
             }
@@ -91,11 +87,8 @@ for(let i in inputs){
 detectTimeChange()
 let c = 0;
 setInterval(()=> {
-    c++
-    console.log(c)
     detectTimeChange()
-// },120000)
-},5000)
+},1000)
 /*================================================== */
 
 
@@ -207,7 +200,7 @@ function scheduleExercise(inputs){
     // store new datetime in variable
     const newDateTime = new Date(str).getTime();
 
-    console.log("TIME STR", newDateTime)
+    // console.log("TIME STR", newDateTime)
     // convert datetime to object {date,time}
     let get_datetime = convertTime(newDateTime);
     get_datetime = {...get_datetime,...{type:inputs.select.value, distance:`${inputs.distance.value} ${inputs.distance_type.value}`}}
@@ -240,7 +233,6 @@ function scheduleExercise(inputs){
     // handle removal of item
     let remove_buttons = [...shedule_list_container.children]
     
-    console.log(remove_buttons)
 
     for(let i = 0; i < remove_buttons.length; i++) {
         let rm_btn = [...remove_buttons[i].children].find(x => x.classList.contains('remove-button'));
@@ -255,7 +247,8 @@ function scheduleExercise(inputs){
             let getIndex = [...document.querySelectorAll('.si-list-item')].indexOf(parent)
 
             // remove items
-            remove_buttons = removeItem(shedule_list_container, getIndex);
+            const removal_message = 'Remove Calendar Item ?'
+            remove_buttons = confirm_prompt(removal_message).then(d => removeItem(shedule_list_container, getIndex))
 
         }
     }
@@ -288,8 +281,8 @@ function removeItem(container,index){
     // replace children
     container.replaceChildren(...current)
 
-    console.log(container)
-    console.log(container.children)
+    // console.log(container)
+    // console.log(container.children)
 
     return current
 }
@@ -318,5 +311,28 @@ function reviewExercise(arr){
             modal_enabled = true;
         }
     }
+}
+
+
+function confirm_prompt(question) {
+    return new Promise((res,rej) => {
+
+        setTimeout(() => {
+                let confirmed = false;
+
+                if(confirm(question)) {
+                    confirmed = true;
+                }
+
+                console.log(confirmed)
+
+                if (confirmed) {
+                    res("Data successfully fetched!"); // Fulfills the promise with a value
+                } else {
+                    rej("Error: Operation failed."); // Rejects the promise with an error
+                }
+        }, 100);
+    })
+
 }
 navToggleContainer.onclick = toggleNav;

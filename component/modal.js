@@ -53,7 +53,6 @@ function clearModal() {
         // if modal has children
         if(modal.children) {
             
-            console.log(modal.children)
             let div_element = [...modal.children].find(child => child.id === 'modal-content-div'); // store child as div
 
             // if div exists
@@ -114,7 +113,6 @@ if(!modal.classList.contains('no-display')){
 }
 
 function processCalendarItem(element) {
-    console.log(element)
     const datetime = element.getAttribute('--data-datetime'); // get datetime from li
     const datetime_obj = convertTime(datetime); // get time info
 
@@ -128,7 +126,6 @@ function processCalendarItem(element) {
         // if distance
         if(sib && /distance/gi.test(cal_label[i].textContent) && parent.id === 'cal-distance') {
             let distContainer = [...element.children].find(d => d.id==='distance-container');
-            console.log(distContainer)
             if(distContainer) {
                 let type_h4 = distContainer.children[0];
                 let type_distance = distContainer.children[1];
@@ -142,7 +139,6 @@ function processCalendarItem(element) {
         // if how
         if(sib && /how/gi.test(cal_label[i].textContent) && parent.id === 'cal-how') {
             let typecontainer = [...element.children].find(d => d.id==='type-container');
-            console.log(typecontainer)
             if(typecontainer) {
                 let type_h4 = typecontainer.children[0];
                 let type_h4_text = type_h4.textContent;
@@ -154,7 +150,6 @@ function processCalendarItem(element) {
         if(sib && /when/gi.test(cal_label[i].textContent) && parent.id === 'cal-when') {
             let datecontainer = [...element.children].find(d => d.id==='date-container');
             let timecontainer = [...element.children].find(d => d.id==='time-container');
-            console.log(datecontainer)
             if(datecontainer) {
                 let type_h4 = datecontainer.children[0];
                 let type_day = datecontainer.children[1];

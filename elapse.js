@@ -59,9 +59,9 @@ export default function detectTimeChange(){
         
         let dateNow = performance.now();
 
-        console.log("TIME COMPARISONS")
-        console.log(Date.now())
-        console.log(dateNow)
+        // console.log("TIME COMPARISONS")
+        // console.log(Date.now())
+        // console.log(dateNow)
 
         let timeLeft = (datetime - Date.now());
 
@@ -92,9 +92,9 @@ function handleTimeConstraints(obj,li) {
   }
   const {hours,minutes,seconds} = obj
 
-  console.log(obj)
+  // console.log(obj)
 
-  console.log(minutes)
+  // console.log(minutes)
 
   if(!hours || hours < 1) {
     let x_hour_warning = Object.keys(time_constraints['hour']).find(x => (Number(x) - hours) === 1 ) || false;
