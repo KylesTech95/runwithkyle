@@ -88,7 +88,7 @@ detectTimeChange()
 let c = 0;
 setInterval(()=> {
     detectTimeChange()
-},5000)
+},1000)
 /*================================================== */
 
 
