@@ -49,6 +49,9 @@ export default function generateCalendarListItem(datetime) {
     const distance1 = document.createElement('h4')
     const distanceType = document.createElement('p')
 
+    // 6. join and leave
+    const reserve = {join: document.createElement('p'), leave: document.createElement('p')}
+
     // ||
     // ||
     // \/
@@ -59,6 +62,11 @@ export default function generateCalendarListItem(datetime) {
 
     // type textcontent
     get_type.textContent = type;
+
+    // reservations
+    const {join, leave} = reserve;
+    join.textContent = 'JOIN'
+    leave.textContent = 'LEAVE'
 
     // distance
     distance1.textContent = distance.split` `[0]
@@ -93,6 +101,8 @@ export default function generateCalendarListItem(datetime) {
     list_item.append(distanceContainer)
     list_item.append(timeContainer)
     list_item.append(remove_button)
+    list_item.append(join)
+    list_item.append(leave)
 
     // ||
     // ||
@@ -103,6 +113,9 @@ export default function generateCalendarListItem(datetime) {
     distanceContainer.classList.add('no-pointer')
     timeContainer.classList.add('no-pointer')
     typeContainer.classList.add('no-pointer')
+
+    join.classList.add('reserve-btn','join-btn')
+    leave.classList.add('reserve-btn','leave-btn', 'grayed-out','no-display')
 
     list_item.setAttribute('--data-datetime', int)
     dateContainer.setAttribute('id','date-container')

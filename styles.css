@@ -26,6 +26,9 @@
     --navigation-bg:#333;
 
     --lightage-bg: url('./media/lightage.jpg');
+
+    --reserve-join:rgba(0, 243, 0, 0.421);
+    --reserve-leave:rgba(255, 0, 0, 0.494);
 }
 
 /* colors */
@@ -40,7 +43,7 @@
 
     --alert-color:#f00;
     --notice-color:rgb(149, 65, 17);
-    
+
 }
 
 /* borders */
@@ -78,7 +81,7 @@
     :root {
         --border-abstract: rgb(247, 0, 255);
         --border-abstract-secondary: rgb(0, 204, 255);
-        --border-primary: #333;
+        --border-primary: #000;
         --border-secondary: #000;
     }
 
@@ -154,6 +157,8 @@ header {
     left:0;
 
     background-color: var(--navigation-bg);
+
+    z-index:999;
 }
 /* logo */
 #logo-container {
@@ -442,19 +447,17 @@ nav#nav{
 
     gap:.25rem;
 
+    z-index: 998;
 }
 .remove-button:hover {
     cursor:pointer;
 }
 .remove-button {
     position:absolute;
-    bottom:0;
+    bottom:-4px;
     right:0;
 
-    padding:0 .5rem;
-
-    border: .5px solid #fff;
-
+    padding:8px ;
 
     background:var(--primary-bg);
 
@@ -465,6 +468,10 @@ nav#nav{
     transform:scale(.98);
 }
 .si-list-item {
+    
+    animation: rollingRow 7s infinite alternate forwards;
+
+    box-shadow: inset -6px -.25rem 12px .9px #333;
 
     width: 97%;
     /* min-height:66px; */
@@ -485,6 +492,18 @@ nav#nav{
     position:Relative;
 
     border:2px solid #000;
+    border-radius:12px;
+
+    overflow:hidden;
+}
+
+@keyframes rollingRow {
+    from {
+        box-shadow: inset -6px -.5rem 12px .9px #333;
+    }
+    to {
+        box-shadow: inset 6px .5rem 12px .9px #333;
+    }
 }
 .bg-yellow{
     background:yellow !important;
@@ -496,7 +515,7 @@ nav#nav{
     background:red !important;
 }
 
-#date-container, #type-container, #distance-container, #distance-container {
+#date-container, #type-container, #distance-container, #distance-container, .reserve-btn {
     display:flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -515,9 +534,26 @@ nav#nav{
 #distance-container > p,
 #distance-container > h4,
 #time-container > p,
-#type-container > h4
+#type-container > h4,
+.reserve-btn
 {
     color:var(--primary-color);
+}
+.reserve-btn:hover{
+    text-decoration:underline;
+    text-underline-offset: 2px;
+    text-decoration-color: var(--primary-color);
+}
+.reserve-btn{
+    font-weight:bold;
+    letter-spacing: 1px;
+    font-size:9pt !important;
+}
+.join-btn{
+    background: var(--reserve-join) !important;
+}
+.leave-btn{
+    background: var(--reserve-leave) !important;
 }
 .si-list-item > p{
     font-size:11pt;
@@ -540,6 +576,9 @@ nav#nav{
     background:var(--primary-bg);
 
     border-radius:0 0 0 6px;
+
+    border-left:2px solid var(--border-primary);
+    border-bottom:2px solid var(--border-primary);
 
 }
 

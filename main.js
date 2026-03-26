@@ -232,7 +232,6 @@ function scheduleExercise(inputs){
 
     // handle removal of item
     let remove_buttons = [...shedule_list_container.children]
-    
 
     for(let i = 0; i < remove_buttons.length; i++) {
         let rm_btn = [...remove_buttons[i].children].find(x => x.classList.contains('remove-button'));
@@ -251,12 +250,46 @@ function scheduleExercise(inputs){
             remove_buttons = confirm_prompt(removal_message).then(d => removeItem(shedule_list_container, getIndex))
 
         }
+
+        // join exercise
+        const join_btn = [...remove_buttons[i].children].find(ch => /join/gi.test(ch.textContent))
+        const leave_btn = [...remove_buttons[i].children].find(ch => /leave/gi.test(ch.textContent))
+        console.log(join_btn)
+        console.log(leave_btn)
+        if(join_btn) {
+            // click on join btn
+            join_btn.onclick = e => {
+                const parent = e.target.parentElement;
+                // parent.onclick = null;
+                const target = e.target;
+
+                target.classList.add('no-display','grayed-out')
+                leave_btn.classList.remove('no-display','grayed-out')
+            }
+        } 
+
+        if(leave_btn) {
+            // click on join btn
+            leave_btn.onclick = e => {
+                const parent = e.target.parentElement;
+                // parent.onclick = null;
+                const target = e.target;
+
+                target.classList.add('no-display','grayed-out');
+                join_btn.classList.remove('no-display','grayed-out');
+            }
+        } 
+
     }
+
+
 
     
     // return 
     // return true;
 }
+
+
 // remove submit
 function removeSubmit() {
     datetime_submit.classList.add('no-display')
