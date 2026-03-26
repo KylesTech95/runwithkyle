@@ -486,6 +486,15 @@ nav#nav{
 
     border:2px solid #000;
 }
+.bg-yellow{
+    background:yellow !important;
+}
+.bg-green{
+    background:green !important;
+}
+.bg-red{
+    background:red !important;
+}
 
 #date-container, #type-container, #distance-container, #distance-container {
     display:flex;

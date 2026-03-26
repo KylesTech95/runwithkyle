@@ -1,7 +1,7 @@
 // imports
 import generateCalendarListItem from "./component/calendar.js";
 import view_modal from "./component/modal.js";
-
+import detectTimeChange from "./elapse.js";
 // vars (variables)
 const navToggleContainer = document.getElementById('nav-toggle-container')
 const nav_container = document.getElementById('nav-list-container')
@@ -87,7 +87,15 @@ for(let i in inputs){
 
 // onkeydown
 // remove an item from schedule
-
+// initial detect
+detectTimeChange()
+let c = 0;
+setInterval(()=> {
+    c++
+    console.log(c)
+    detectTimeChange()
+// },120000)
+},5000)
 /*================================================== */
 
 

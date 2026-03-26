@@ -101,6 +101,7 @@ export default function generateCalendarListItem(datetime) {
 
     // Add classes / setAttribute to elements
     dateContainer.classList.add('no-pointer')
+    distanceContainer.classList.add('no-pointer')
     timeContainer.classList.add('no-pointer')
     typeContainer.classList.add('no-pointer')
 
