@@ -1,5 +1,6 @@
 import { convertTime } from "../main.js";
 import { updateItem } from "../elapse.js";
+import { handleVibrate } from "../main.js";
 /* ------------------------------------------- */
 
 const modal = document.getElementById('modal-container')
@@ -212,6 +213,7 @@ function activateTemplate(type) {
 }
 
 function handleCompletion(element) {
+    handleVibrate()
     // set li background to red
     updateItem(element, 'completed')
     exitModal()

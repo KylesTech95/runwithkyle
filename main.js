@@ -339,15 +339,24 @@ function reviewExercise(arr){
     for(let i = 0;  i < arr.length; i++) {
         // click on exercise
         arr[i].onclick = () => {
+
+            // vibrate
+            handleVibrate()
+
             // view modal
             view_modal('calendar',{calendar:{li:arr[i]}})
             modal_enabled = true;
         }
     }
 }
-
+export function handleVibrate() {
+    if(navigator.vibrate) navigator.vibrate(133);
+}
 
 function confirm_prompt(question) {
+    // vibrate
+    handleVibrate()
+    
     return new Promise((res,rej) => {
         
         setTimeout(() => {
