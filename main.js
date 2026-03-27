@@ -230,7 +230,7 @@ function scheduleExercise(inputs){
     shedule_list_container.replaceChildren(...sort_children)
 
     // enable clients to view an exercise
-    reviewExercise(sort_children)
+    reviewExercise(document.querySelectorAll('.si-list-item'))
 
 
 

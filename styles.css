@@ -701,7 +701,8 @@ nav#nav{
     background-color: green;
 
     border:5px solid var(--border-secondary);
-
+    border-bottom:none !important;
+    border-right:none !important;
     position:absolute;
     bottom:5px;
     right:5px;
