@@ -1,4 +1,4 @@
-import { convertTime } from "../main.js";
+import { convertTime, confirm_prompt } from "../main.js";
 import { updateItem } from "../elapse.js";
 import { handleVibrate } from "../main.js";
 /* ------------------------------------------- */
@@ -114,8 +114,8 @@ function appendCompletion(element) {
             p.textContent = 'Complete'
 
             modal.append(p)
-
-            p.onclick = () => handleCompletion(element)
+            const completion_question = 'Confirm event completion'
+            p.onclick = () => confirm_prompt(completion_question).then(x => handleCompletion(element))
         }
     }
 }

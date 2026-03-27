@@ -186,6 +186,7 @@ export function getMonth(num){
 }
 // submit date/time onclick 
 function scheduleExercise(inputs){
+
     let str = '';
     
     // check if values are present
@@ -209,6 +210,16 @@ function scheduleExercise(inputs){
     // generate list item
     let listitem = generateCalendarListItem(get_datetime);
     shedule_list_container.appendChild(listitem) // append listitem to ul
+    
+    const event_in_progress = [...document.querySelectorAll('.si-list-item')].length > 0 && [...document.querySelectorAll('.si-list-item')].find(x => x.classList.contains('bg-green'));
+    console.log([...document.querySelectorAll('.si-list-item')])
+    console.log("EVENT IN PROGRESS",event_in_progress)
+    if(event_in_progress){
+        listitem.remove();
+        console.warn('scheduleExercise: Event is in progress')
+        alert('scheduleExercise: Event is in progress');
+        return false;
+    }
 
     // sort schedule container
     let current_children = [...shedule_list_container.children];
@@ -353,7 +364,7 @@ export function handleVibrate() {
     if(navigator.vibrate) navigator.vibrate(133);
 }
 
-function confirm_prompt(question) {
+export function confirm_prompt(question) {
     // vibrate
     handleVibrate()
     

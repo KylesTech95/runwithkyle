@@ -389,6 +389,18 @@ nav#nav{
 
 /* section columns */
 /* ______________________________ */
+.event-disclosure{
+    width:100%;
+
+    font-size:11pt;
+    font-weight:bold;
+
+    color:var(--primary-color);
+
+    text-align:center;
+
+    margin:0 auto;
+}
 .section-column-label {
     letter-spacing:1.25px;
 
@@ -468,7 +480,6 @@ nav#nav{
     transform:scale(.98);
 }
 .si-list-item {
-    
     animation: rollingRow 7s infinite alternate forwards;
 
     box-shadow: inset -6px -.25rem 12px .9px #333;
@@ -495,6 +506,7 @@ nav#nav{
     border-radius:12px;
 
     overflow:hidden;
+
 }
 
 @keyframes rollingRow {
@@ -554,6 +566,9 @@ nav#nav{
     font-weight:bold;
     letter-spacing: 1px;
     font-size:9pt !important;
+
+    /* color:var(--priamry-color); */
+    color:#000;
 }
 .join-btn{
     background: var(--reserve-join) !important;
@@ -683,12 +698,13 @@ nav#nav{
     font-size:11pt;
     font-weight:bold;
 
-    background-color: var(--alert-color);
+    background-color: green;
+
+    border:5px solid var(--border-secondary);
 
     position:absolute;
-    top:6px;
-    left:50%;
-    transform:translate(-50%,0);
+    bottom:5px;
+    right:5px;
 }
 .completion-btn:hover{
     cursor:pointer;
@@ -715,6 +731,7 @@ section#modal-container {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
 }
 
 /* exit modal */
