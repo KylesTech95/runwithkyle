@@ -464,6 +464,17 @@ nav#nav{
 .remove-button:hover {
     cursor:pointer;
 }
+.camera-remove {
+    right:50% !important;
+    bottom:unset !important;
+    top:2px !important; 
+    
+    transform:translate(50%,0);
+
+    background:var(--primary-bg);
+    
+    padding:4px;
+}
 .remove-button {
     position:absolute;
     bottom:-4px;
@@ -474,6 +485,8 @@ nav#nav{
     background:var(--primary-bg);
 
     color: var(--alert-color);
+
+    z-index: 999;
 }
 .si-list-item:hover {
     cursor: pointer;
@@ -546,7 +559,6 @@ nav#nav{
     background:#fff !important;
 }
 .camera-view {
-    background:#000 !important;
 
     border-radius:50% !important;
     border:.5rem solid var(--border-abstract);
@@ -749,6 +761,8 @@ section#modal-container {
     align-items: center;
     justify-content: center;
 
+    overflow:hidden;
+
 }
 
 /* exit modal */
@@ -765,7 +779,7 @@ section#modal-container {
 
     color:#f00;
 
-    /* z-index: 999; */
+    z-index: 999;
 }
 
 /* modal template  */
@@ -801,4 +815,69 @@ section#modal-container {
 .cal-answer { 
     color:var(--secondary-color);
     font-size:12pt;
+}
+
+/* camera */
+
+.camera-flip:active{
+    background:#fff;
+    border:2px solid #000;
+}
+.camera-flip{
+    display:none !important;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height:45px;
+    width:45px;
+    background:#000;
+    z-index: 999;
+    position:fixed;
+    transform: translate(-50%,0);
+    left:50%;
+    top:0;
+    border-radius: 50%;
+    border:2px solid rgb(255, 255, 255);
+}
+.circle-div-recorder{
+    display:none;
+}
+.circle-div{
+    z-index: 997;
+    background:var(--primary-bg);
+    /* border-radius: 50%; */
+    /* border:2px solid red; */
+    position:fixed;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    left:50%;
+    top:50%;
+    /* transform:translate(-50%,-50%) rotate(180deg); */
+    overflow: hidden;
+    height:100%;
+    width:100%;
+    opacity:0;
+    box-shadow: 0 0 12px .9px #333;
+    animation: rotatevideo .33s forwards normal;
+}
+.video-hover{
+    opacity:.85 !important;
+}
+@keyframes rotatevideo {
+    to {
+        opacity:1;
+        transform:translate(-50%,-50%) rotate(0deg);
+    }
+}
+#video-feed{
+    height:100%;
+    width:100%;
+
+    z-index: 996;
+
+    aspect-ratio: 1 / 1;
+
 }

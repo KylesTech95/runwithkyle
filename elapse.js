@@ -51,7 +51,6 @@ const time_constraints = {
 export default function detectTimeChange(){
   if(document.querySelectorAll('.si-list-item') && document.querySelectorAll('.si-list-item').length > 0){
     let siS = [...document.querySelectorAll('.si-list-item')].filter(x => !x.classList.contains('bg-red'));
-    console.log(siS)
     siS.forEach(s => {
       
         updateItem(s, 'pending')
@@ -108,7 +107,6 @@ function handleTimeConstraints(obj,li) {
       // handletimeout
         let li_list = [...li.parentElement.children];
         li_list.filter(l => {
-          console.log(l.classList.contains('bg-green'))
           return l.classList.contains('bg-green')
         }).length < 1 ? updateItem(li,'in-progress') : updateItem(li, 'pending') 
       } else {

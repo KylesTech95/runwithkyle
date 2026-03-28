@@ -2,6 +2,7 @@
 import generateCalendarListItem from "./component/calendar.js";
 import view_modal from "./component/modal.js";
 import detectTimeChange from "./elapse.js";
+import { startCamera } from "./component/camera.js";
 // vars (variables)
 const navToggleContainer = document.getElementById('nav-toggle-container')
 const nav_container = document.getElementById('nav-list-container')
@@ -13,6 +14,7 @@ const maxBars = 2;
 const window_type = 'general'
 
 export let modal_enabled = false;
+export let localvideoStreamMain;
 
 
 // object data
@@ -256,7 +258,7 @@ function scheduleExercise(inputs){
             // prompt question
             const take_picture = 'Access camera ?';
             
-            confirm_prompt(take_picture).then(y => takePicture(li,cam))
+            confirm_prompt(take_picture).then(y => steamVideo(li,cam))
             
         }
         // click on item
@@ -401,10 +403,13 @@ export function confirm_prompt(question) {
 navToggleContainer.onclick = toggleNav;
 
 // take picture 
-function takePicture(li,cam) {
+function steamVideo(li,cam) {
     cam.classList.add('camera-on')
-    
+
     console.log('taking picture soon !')
 
     view_modal('camera', {calendar : {li : li}})
+
+    startCamera(true)
+
 }

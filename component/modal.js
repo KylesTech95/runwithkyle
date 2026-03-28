@@ -1,6 +1,7 @@
 import { convertTime, confirm_prompt } from "../main.js";
 import { updateItem } from "../elapse.js";
 import { handleVibrate } from "../main.js";
+import { startCamera } from "./camera.js";
 /* ------------------------------------------- */
 
 const modal = document.getElementById('modal-container')
@@ -126,6 +127,9 @@ function appendCompletion(element) {
 
 export function exitModal() {
 if(!modal.classList.contains('no-display')){
+    let allExits = [...document.querySelectorAll('#modal-exit')]
+    allExits.map(x => x.remove())
+        // document.getElementById('modal-container').classList.remove('camera-remove')
         // turn any cameras back to white (off)
         let all_cameras = [...document.querySelectorAll('.camera-on')];
         all_cameras.map(camera => camera.classList.remove('camera-on'))
@@ -139,6 +143,9 @@ if(!modal.classList.contains('no-display')){
 
         // set body to no-pointer
         wrapper.classList.remove('no-pointer', 'stale-body')
+
+        // turn off camera
+        startCamera(false)
     }
 }
 
