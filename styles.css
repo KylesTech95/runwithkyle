@@ -545,6 +545,22 @@ nav#nav{
 .camera-btn {
     background:#fff !important;
 }
+.camera-view {
+    background:#000 !important;
+
+    border-radius:50% !important;
+    border:.5rem solid var(--border-abstract);
+
+    height:250px !important;
+    width:250px !important;
+
+    aspect-ratio: 1 / 1;
+
+    animation: appearCamera 1s forwards;
+}
+.camera-on {
+    background:#f00 !important;
+}
 #date-container > p,
 #date-container > h4,
 #distance-container > p,

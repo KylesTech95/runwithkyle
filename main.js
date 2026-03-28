@@ -243,10 +243,22 @@ function scheduleExercise(inputs){
 
     // handle removal of item
     let remove_buttons = [...shedule_list_container.children]
-
     for(let i = 0; i < remove_buttons.length; i++) {
+        let camera_btn = [...remove_buttons[i].children].find(x => x.classList.contains('camera-btn'))
         let rm_btn = [...remove_buttons[i].children].find(x => x.classList.contains('remove-button'));
 
+        // camera onclick
+        camera_btn.onclick = (e) => {
+            let cam = e.target;
+            let li = remove_buttons[i];
+
+            console.log('camera is clicked!');
+            // prompt question
+            const take_picture = 'Access camera ?';
+            
+            confirm_prompt(take_picture).then(y => takePicture(li,cam))
+            
+        }
         // click on item
         rm_btn.onclick = (e) => {
             const parent = e.target.parentElement;
@@ -387,3 +399,12 @@ export function confirm_prompt(question) {
 
 }
 navToggleContainer.onclick = toggleNav;
+
+// take picture 
+function takePicture(li,cam) {
+    cam.classList.add('camera-on')
+    
+    console.log('taking picture soon !')
+
+    view_modal('camera', {calendar : {li : li}})
+}

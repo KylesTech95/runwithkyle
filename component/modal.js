@@ -33,7 +33,11 @@ export default function view_modal(type, options = {calendar:{li:undefined}}) {
         
         break;
 
-
+        case type == 'camera':
+            if(document.querySelector('.completion-btn')) document.querySelector('.completion-btn').remove()
+            modal.classList.add('camera-view')
+        break;
+        
         case type == 'notification':
         break;
 
@@ -122,8 +126,16 @@ function appendCompletion(element) {
 
 export function exitModal() {
 if(!modal.classList.contains('no-display')){
+        // turn any cameras back to white (off)
+        let all_cameras = [...document.querySelectorAll('.camera-on')];
+        all_cameras.map(camera => camera.classList.remove('camera-on'))
+
+
         // modal appears
         modal.classList.add('no-display')
+
+        // remove camera
+        modal.classList.remove('camera-view')
 
         // set body to no-pointer
         wrapper.classList.remove('no-pointer', 'stale-body')
