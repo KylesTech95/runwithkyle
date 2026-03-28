@@ -126,6 +126,7 @@ export default function generateCalendarListItem(datetime) {
     leave.classList.add('reserve-btn','leave-btn', 'grayed-out','no-display')
 
     camera.classList.add('camera-btn', 'no-display')
+    camera.setAttribute('draggable', false)
 
     list_item.setAttribute('--data-datetime', int)
     dateContainer.setAttribute('id','date-container')

@@ -16,6 +16,11 @@ export default function view_modal(type, options = {calendar:{li:undefined}}) {
         return;
     }
 
+    if(type === 'exit') {
+        exitModal();
+        return;
+    }
+    
     viewModal() // view modal
     clearModal() // clear modal of previous items
     appendExit() // append exit
@@ -49,7 +54,6 @@ export default function view_modal(type, options = {calendar:{li:undefined}}) {
 
         case type == 'error':
         break;  
-
 
         default: console.log(undefined)
         break;

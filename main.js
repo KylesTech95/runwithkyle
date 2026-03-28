@@ -35,9 +35,9 @@ const months = {
 const inputs = {
     date:document.getElementById('scheduled-date'),
     time:document.getElementById('appointment-time'),
-    select:document.getElementById('run-or-walk'),
     distance:document.getElementById("rwk-distance-input"),
-    distance_type:document.getElementById("distance-type")
+    distance_type:document.getElementById("distance-type"),
+    select:document.getElementById('run-or-walk')
 }
 const object = {
     error:'object is not present',
@@ -241,6 +241,8 @@ function scheduleExercise(inputs){
     inputs.date.value = ''
     inputs.time.value = ''
     inputs.select.value = ''
+    inputs.distance.value = ''
+    inputs.distance_type.value = ''
 
 
     // handle removal of item
@@ -265,7 +267,7 @@ function scheduleExercise(inputs){
         rm_btn.onclick = (e) => {
             const parent = e.target.parentElement;
 
-            parent.onclick = null;
+            // parent.onclick = null;
 
             // get current index
             let getIndex = [...document.querySelectorAll('.si-list-item')].indexOf(parent)
@@ -329,6 +331,9 @@ function removeItem(container,index){
         console.error('no arguments. check again')
         return;
     }
+
+    // hide modal
+    view_modal('exit')
 
     // target current children
     let current = [...container.children];
