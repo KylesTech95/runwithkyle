@@ -31,7 +31,7 @@ const audio_options = {
 
 
 // start camera
-export async function startCamera(bool,resolution={height:1080,width:1920}) {
+export async function startCamera(bool,resolution={height:1080,width:1080}) {
     expanded = false
         try {
             
