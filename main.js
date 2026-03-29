@@ -3,6 +3,8 @@ import generateCalendarListItem from "./component/calendar.js";
 import view_modal from "./component/modal.js";
 import detectTimeChange from "./elapse.js";
 import { startCamera } from "./component/camera.js";
+import phrases from './dataset/motivational_phrases.json' with {type:'json'}
+import minis from './dataset/motivational_phrases.json' with {type:'json'}
 // vars (variables)
 const navContainerMobile = document.getElementById('nav-list-container-mobile');
 const navToggleContainer = document.getElementById('nav-toggle-container')
@@ -13,9 +15,11 @@ const shedule_list_container = document.getElementById('scheduled-item-list-cont
 const datetime_submit = document.getElementById('datetime-submit')
 const maxBars = 2;
 const window_type = 'general'
+const motive_quote = document.getElementById('motivation-quotation');
 
 export let modal_enabled = false;
 export let localvideoStreamMain;
+
 
 
 // object data
@@ -412,7 +416,6 @@ export function confirm_prompt(question) {
     })
 
 }
-navToggleContainer.onclick = toggleNav;
 
 // take picture 
 function steamVideo(li,cam) {
@@ -425,3 +428,65 @@ function steamVideo(li,cam) {
     // startCamera(li,true)
 
 }
+
+
+function appendMotivation(phrase) {
+    if(document.getElementById('motivation-quotation')) {
+        
+        motive_quote.textContent = phrase;
+
+        motive_quote.classList.remove('no-display')
+        motive_quote.classList.add('appear-motive')
+
+        console.log(phrase)
+        
+    }
+}
+function removeMotivation() {
+    if(document.getElementById('motivation-quotation')) {
+        motive_quote.classList.remove('appear-motive')
+    }
+}
+// roll through a new motivational phrase every minute
+const items = phrases.phrases
+const delay = 30000; // 1 second delay
+
+function loopItems(index = 0) {
+    // remove motivation quote (beginning)
+    removeMotivation()
+    
+    let currIdx = localStorage.getItem('moto_index') || '0';
+
+    console.log(currIdx)
+
+    console.log('APPEND MESSAGE!')
+    appendMotivation(items[currIdx])
+
+    // append message to the DOM
+    setTimeout(() => {
+        
+        removeMotivation()
+    }, 3250);
+
+  // Calculate the next index using the modulo operator to loop back to the start
+  const nextIndex = (index + 1) % items.length;
+  
+
+  // Schedule the next iteration
+  setTimeout(() => {
+    loopItems(nextIndex);
+
+    // store current index
+    localStorage.setItem('moto_index', nextIndex);
+
+  }, delay);
+}
+
+// Start the loop
+loopItems();
+
+
+
+
+
+navToggleContainer.onclick = toggleNav;

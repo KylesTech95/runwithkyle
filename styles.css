@@ -398,6 +398,8 @@ nav#nav{
 
     width:100%;
 
+    padding:6px;
+
 }
 
 .auth{
@@ -511,6 +513,42 @@ cursor:pointer;
 }
 /* ______________________________ */
 
+/* motivation */
+/* ______________________________ */
+#motivation-quotation {
+    transition: .5s;
+
+    width:100%;
+    
+    position:fixed;
+    bottom:0;
+    left:0;
+
+    background:orange;
+
+    font-weight:bold;
+
+    letter-spacing: 1px;
+    
+    opacity:0;
+
+    padding:8px;
+
+    font-size:12pt;
+    
+}
+
+@keyframes slideright {
+    to {
+        padding-left:2rem;
+    }
+} 
+.appear-motive{
+    opacity:1 !important;
+    animation: slideright 5s forwards ease-out;
+
+}
+/* ______________________________ */
 
 
 
