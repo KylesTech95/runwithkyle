@@ -465,6 +465,13 @@ div.products-section-col {
 
 }   
 
+#rwk-products {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap:1rem;
+}
 .products-label {
     font-size:11pt;
     color:var(--primary-color);
