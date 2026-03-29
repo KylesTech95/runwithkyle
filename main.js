@@ -422,6 +422,6 @@ function steamVideo(li,cam) {
 
     view_modal('camera', {calendar : {li : li}})
 
-    startCamera(true)
+    // startCamera(li,true)
 
 }

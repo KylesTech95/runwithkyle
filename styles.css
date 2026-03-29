@@ -465,17 +465,24 @@ div.products-section-col {
 
 }   
 
-#rwk-products {
+
+#products-wrapper{
+    /* border:2px solid red; */
     display:flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    flex-direction: row;
+    align-items: end;
+    justify-content: start;
     gap:1rem;
 }
 .products-label {
     font-size:11pt;
+
+    text-align: center;
+    
     color:var(--primary-color);
+
     letter-spacing: 1px;
+
     font-weight: bold;
 }
 #rwk-products > div > img{
@@ -795,6 +802,9 @@ input, select {
 }
 
 /* modal */
+.modal-video-fixed-top {
+    top: 25% !important;
+}
 .completion-btn{
     color:#fff;
 
@@ -989,9 +999,7 @@ section#modal-container {
 }
 
 /* gallery */
-#rwk-gallery{
 
-}
 .gallery-img-container {
     background:var(--secondary-color);
 }

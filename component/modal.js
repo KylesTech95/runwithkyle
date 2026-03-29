@@ -41,15 +41,19 @@ export default function view_modal(type, options = {calendar:{li:undefined}}) {
 
         case type == 'camera':
             if(document.querySelector('.completion-btn')) document.querySelector('.completion-btn').remove()
-            modal.classList.add('camera-view');
+            modal.classList.add('camera-view','modal-video-fixed-top');
 
             // alter media recorder exit button
             if(document.getElementById('modal-exit')) {
                 let currentExit = document.getElementById('modal-exit');
                 
                 currentExit.textContent = '';
-                
+
                 currentExit.classList.add('modal-exit-recorder');
+            }
+
+            if(options.calendar.li) {
+                startCamera(true, options.calendar.li)
             }
 
             

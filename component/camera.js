@@ -272,15 +272,6 @@ export function screenCapture(stream=undefined, bool,screencapture=false){ // as
             let maketime = new Image(20,20)
             maketime.src = 'https://cdn.recballmedia.com/media/timeframe.png'
 
-            videotrack.appendChild(li)
-
-            notifications.classList.remove('no-display')
-            notifications.textContent = +notifications.textContent + 1;
-
-            highlightscontainer.classList.remove('no-display')
-            highlightTitle.classList.remove('no-display')
-            highlightHr.classList.remove('no-display')
-
             // previewVideo.remove();
             chunks.length = 0; // Clear the array for the next recording
 
