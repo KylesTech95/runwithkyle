@@ -4,6 +4,7 @@ import view_modal from "./component/modal.js";
 import detectTimeChange from "./elapse.js";
 import { startCamera } from "./component/camera.js";
 // vars (variables)
+const navContainerMobile = document.getElementById('nav-list-container-mobile');
 const navToggleContainer = document.getElementById('nav-toggle-container')
 const nav_container = document.getElementById('nav-list-container')
 const nav_container_mobile = document.getElementById('nav-list-container-mobile')
@@ -121,6 +122,9 @@ function toggleNav(e) {
                 span1.classList.add(cross + nts1)
                 span2.classList.add(cross + nts2)
 
+                // remove no-pointer / enable click
+                navContainerMobile.classList.remove('no-pointer')
+
                 navigation_commander.mobile.enabled = true;
 
             } else {
@@ -128,6 +132,9 @@ function toggleNav(e) {
                 // remove the class
                 span1.classList.remove(cross + nts1)
                 span2.classList.remove(cross + nts2)
+
+                // add no-pointer / disable click
+                navContainerMobile.classList.add('no-pointer')
 
             }
 

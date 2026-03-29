@@ -813,6 +813,8 @@ section#modal-container {
     top:unset !important;
     bottom:5px !important;
 
+    right:unset;
+
     background:#f00;
 
     border-radius: 50%;
@@ -823,6 +825,16 @@ section#modal-container {
     width:45px;
 
     border: 2px solid var(--secondary-bg);
+
+    opacity:0;
+    
+    animation: openexitrecorder 1s .75s forwards;
+}
+
+@keyframes openexitrecorder {
+    to{
+        opacity:1;
+    }
 }
 
 /* modal template  */
