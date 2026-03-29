@@ -73,8 +73,12 @@
     
 }
 
-
+/* landscpe */
 @media only screen and (min-width:680px) and (max-width: 915px) {
+   /* modal */
+.modal-video-fixed-top {
+    top: 35% !important;
+}
     .legend-label {
         font-weight: bold;
         font-size:9pt;

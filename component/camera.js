@@ -268,6 +268,8 @@ export function screenCapture(stream=undefined, bool,screencapture=false){ // as
             a.download = `rwk-${year}.${formattedMonth}.${formattedDay}-${dateTime}.${'mp4'}`;
             
             a.click()
+
+            // append 
             
             let maketime = new Image(20,20)
             maketime.src = 'https://cdn.recballmedia.com/media/timeframe.png'

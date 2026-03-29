@@ -436,6 +436,11 @@ nav#nav{
     text-decoration:underline;
     text-underline-offset: 3.33px;
 }
+#kyles-schedule,
+#client-schedule,
+#rk-schedule {
+    position:relative;
+}
 .section-column{
     border-bottom: 5.5px solid var(--primary-color);
     
@@ -446,6 +451,10 @@ nav#nav{
     width:650px;
 
     margin:1rem auto;
+
+    overflow:hidden;
+
+    overflow-y:scroll;
 }
 /* ______________________________ */
 
@@ -471,19 +480,23 @@ div.products-section-col {
     display:flex;
     flex-direction: row;
     align-items: end;
-    justify-content: start;
+    justify-content: space-evenly;
+    
     gap:1rem;
 }
 .products-label {
     font-size:11pt;
 
     text-align: center;
-    
+
     color:var(--primary-color);
 
     letter-spacing: 1px;
 
     font-weight: bold;
+}
+#rwk-schedule {
+    max-height:50vh;
 }
 #rwk-products > div > img{
     height:100px;
@@ -714,7 +727,7 @@ input, select {
 #input-container{
     overflow: hidden;
     
-    width:100%;
+    /* width:100%; */
 
     border:2px solid #000;
 
@@ -722,13 +735,15 @@ input, select {
     padding:6px;
 
     display:flex;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
     gap:.5rem;
 
     flex-wrap:wrap;
 
-    margin-top:.5rem;
+    transform: translate(0,-25px);
+
+    /* margin-top:.5rem; */
 }
 
 #datetime-submit{

@@ -53,7 +53,7 @@ export default function view_modal(type, options = {calendar:{li:undefined}}) {
             }
 
             if(options.calendar.li) {
-                startCamera(true, options.calendar.li)
+                startCamera(true)
             }
 
             
@@ -158,14 +158,14 @@ if(!modal.classList.contains('no-display')){
         modal.classList.add('no-display')
 
         // remove camera
-        modal.classList.remove('camera-view')
+        modal.classList.remove('camera-view', 'modal-video-fixed-top')
 
         // set body to no-pointer
         wrapper.classList.remove('no-pointer', 'stale-body')
 
         // turn off camera
         startCamera(false)
-    }
+}
 }
 
 function processCalendarItem(element) {
