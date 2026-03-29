@@ -8,6 +8,9 @@
         font-size:9pt;
     }
 
+    .si-list-item {
+        width:100% !important;
+    }
     #input-container{
         gap:4px;
     }

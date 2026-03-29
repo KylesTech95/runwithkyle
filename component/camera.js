@@ -158,14 +158,18 @@ export async function startCamera(bool,resolution={height:1080,width:1920}) {
                         track.stop(); // Stop each individual track
                         // // console.log(`Stopped track: ${track.kind}`);
                     });
+                    
                     // Optionally, clear the srcObject of the video element
                     const videoElement = document.querySelector('video');
                     if (videoElement) {
                         videoElement.srcObject = null;
                     }
+                    
                 }
                 document.getElementById('video-feed') ? document.getElementById('video-feed').remove():null;
                 document.querySelector('.circle-div') ? document.querySelector('.circle-div').remove():null;
+
+            
             }
             
         } catch (err) {
@@ -176,46 +180,8 @@ export async function startCamera(bool,resolution={height:1080,width:1920}) {
         
         
 }
-// start media recorder
-export async function startMediaRecorder(){
-    // get display media
-    try{
 
-        let videoStream = await navigator.mediaDevices.getDisplayMedia({video: {
-      mediaSource: "display",
-      // Excludes the 'Entire Screen' option from the picker
-      monitorTypeSurfaces: "exclude" 
-    },audio:true})
-            localvideoStream = videoStream
-            screenCapture(videoStream,true,true)
-        
-    }
-    catch(err){
-        console.error(err)
-       
-    }
-}
-// end media recorder
-export async function endMediaRecorder(){
-    try{
-        // screenCapture(undefined,bool,true)
-        if (localvideoStream||localvideoStreamMain) {
-            let livestream = (localvideoStream||localvideoStreamMain)
-                livestream.getTracks().forEach(track => {
-                    track.stop(); // Stop each individual track
-                    // // console.log(`Stopped track: ${track.kind}`);
-                });
-                // Optionally, clear the srcObject of the video element
-                const videoElement = document.querySelector('video');
-                if (videoElement) {
-                    videoElement.srcObject = null;
-                }
-            }
 
-    } catch(err){
-        console.error(err)
-    }
-}
 // screen capture 
 export function screenCapture(stream=undefined, bool,screencapture=false){ // assuming video is true
 
@@ -256,13 +222,8 @@ export function screenCapture(stream=undefined, bool,screencapture=false){ // as
             // add data to chuks [array] if available
         mediarecorder.addEventListener('dataavailable',e => {
             if(e.data.size > 0) {
-                if(screencapture!==false){
-                    screenchunks.push(e.data)
-                }
-                else {
                     // console.log(e.data)
                     chunks.push(e.data);
-                }
             }
         })
 
@@ -272,52 +233,26 @@ export function screenCapture(stream=undefined, bool,screencapture=false){ // as
             mediarecorder.stop();
             stream.getTracks().forEach(track => track.stop()); // Stop all tracks
 
-            const blob = new Blob(screencapture?screenchunks:chunks, {
+            const blob = new Blob(chunks, {
             // type: `video/${screencapture ? 'webm' : 'mp4'}`
             type: `video/mp4`
         }); 
         
-        const url = URL.createObjectURL(blob);
+            const url = URL.createObjectURL(blob);
             const li = document.createElement('li')
             const a = document.createElement('a');
             const remove = document.createElement('span')
             // const newtime = document.getElementById('time-actual');
-            const time_para = document.createElement('p')
-            const time_frame = document.createElement('p')
             
-            let ext = screencapture ? 'webm' : 'mp4'
-            // format newtime hour
-            let am_pm = 'am'
-            // let splittime = newtime.textContent.split(':')
-            // let first_newtime = splittime[0];
-            // if(first_newtime > 12){
-            //     am_pm = 'pm'
-            //     first_newtime = Number(first_newtime - 12);
-            //     splittime[0] = first_newtime;
-            // } else {
-            //     am_pm = 'am'
-            // }
-
-            // push am_pm
-            // splittime.push(am_pm)
-            // let getLastIndexOfColon = splittime.lastIndexOf(':');
-            // splittime.splice(getLastIndexOfColon-1,1)
-            // join split time
-            // splittime = splittime.join(':')
-            // splittime = splittime.replace(/:(am|pm)$/ig,' $1')
-
-            // transfer textcontent
-            // newtime.textContent = splittime
-            // time_para.textContent = newtime.textContent;
-
-            // time_frame.textContent = formattime;
-
+            
             li.classList.add('highlight-li')
             li.classList.add('unseen')
-
             a.classList.add('highlight-link')
 
+            // update url
             a.href = url;
+
+
             // date object
             const dateObj = new Date()
             const dateTime = dateObj.getTime()
@@ -334,60 +269,30 @@ export function screenCapture(stream=undefined, bool,screencapture=false){ // as
             
             a.click()
             
-            remove.textContent = 'X'
-            remove.classList.add('highlight-remove')
-            
             let maketime = new Image(20,20)
             maketime.src = 'https://cdn.recballmedia.com/media/timeframe.png'
 
-            // li.appendChild(a)
-            // li.appendChild(remove)
-            // li.appendChild(time_para)
-            // li.appendChild(time_frame)
-            // time_frame.insertBefore(maketime,this)
-
             videotrack.appendChild(li)
-            a.textContent = len
 
             notifications.classList.remove('no-display')
             notifications.textContent = +notifications.textContent + 1;
-            // time_para.classList.add('new-time-element')
-            // time_frame.classList.add('new-timeframe-element')
+
             highlightscontainer.classList.remove('no-display')
             highlightTitle.classList.remove('no-display')
             highlightHr.classList.remove('no-display')
 
             // previewVideo.remove();
             chunks.length = 0; // Clear the array for the next recording
-            
-            screencapture !== true ? chunks = [] : screenchunks = [];
-                
-    })
+
+        })
     // start recording
     // Start recording, gathering data every 200ms
     bool ? mediarecorder.start(100) : mediarecorder.stop();
-    // console.log("Recording started...")
+    chunks = [] 
 
     }
 }
-// remove media
-export function removeMedia(e){
-    const target = e;
-    const parent = target.parentElement;
-    const video = [...parent.children].find(x => x.localName=='a');
-    parent.remove();
-    
-    let currentArr = [...document.querySelectorAll('.highlight-li')];
-    if(currentArr.length < 1){
-        document.getElementById('thumb-gallery').classList.add('no-display')
-        highlightscontainer.classList.add('no-display')
-        highlightTitle.classList.add('no-display')
-        highlightHr.classList.add('no-display')
-    }
 
-    // remap indicies for textcontent
-    currentArr.map((_,idx) => [..._.children].find(x => x.localName=='a').textContent = (idx + 1) )
-}
 // milliseconds to minutes and seconds 04:12
 function millisToMinutesAndSeconds(millis) {
   var minutes = Math.floor(millis / 60000);
