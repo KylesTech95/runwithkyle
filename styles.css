@@ -809,6 +809,22 @@ section#modal-container {
     z-index: 999;
 }
 
+.modal-exit-recorder {
+    top:unset !important;
+    bottom:5px !important;
+
+    background:#f00;
+
+    border-radius: 50%;
+
+    padding:unset;
+
+    height:45px;
+    width:45px;
+
+    border: 2px solid var(--secondary-bg);
+}
+
 /* modal template  */
 #calendar-modal-template{
     height:100%;
