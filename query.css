@@ -1,5 +1,10 @@
 /* Extra Small Mobile (Portrait - 320px to 480px) */
 @media only screen and (max-width: 480px) {
+    /* motivation */
+    /* ______________________________ */
+    #motivation-quotation {
+        font-size:9pt;
+    }
     .legend-label {
         font-weight: bold;
         font-size:9pt;
@@ -75,7 +80,10 @@
 
 /* landscpe */
 @media only screen and (min-width:680px) and (max-width: 915px) {
-   /* modal */
+#motivation-quotation {
+    font-size:9pt;
+}
+    /* modal */
 .modal-video-fixed-top {
     top: 35% !important;
 }
