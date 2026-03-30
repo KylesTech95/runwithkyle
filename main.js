@@ -48,7 +48,8 @@ const inputs = {
     time:document.getElementById('appointment-time'),
     distance:document.getElementById("rwk-distance-input"),
     distance_type:document.getElementById("distance-type"),
-    select:document.getElementById('run-or-walk')
+    select:document.getElementById('run-or-walk'),
+    duration:document.getElementById('duration')
 }
 const object = {
     error:'object is not present',

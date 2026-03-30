@@ -52,10 +52,7 @@ export default function view_modal(type, options = {calendar:{li:undefined}}) {
                 currentExit.classList.add('modal-exit-recorder');
             }
 
-            if(options.calendar.li) {
-                startCamera(true)
-            }
-
+            startCamera(true);
             
         break;
         
