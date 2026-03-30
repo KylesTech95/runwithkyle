@@ -8,8 +8,11 @@ const modal = document.getElementById('modal-container')
 const body = document.body;
 const wrapper = document.getElementById('wrapper')
 const window_type = 'modal'
+const completion_check = document.querySelector('.completion-check')
 
 export default function view_modal(type, options = {calendar:{li:undefined}}) {
+
+    if(completion_check)completion_check.classList.add('no-display')
 
     if(!type) {
         console.error('view_modal: Check arguments');
@@ -34,7 +37,8 @@ export default function view_modal(type, options = {calendar:{li:undefined}}) {
         }
         // process calendar item
         processCalendarItem(options.calendar.li);
-        appendCompletion(options.calendar.li)
+        appendCompletion(options.calendar.li);
+        detectCompletion(options.calendar.li)
 
         
         break;
@@ -126,6 +130,21 @@ function appendExit() {
     }
 
 }
+
+function detectCompletion(element) {
+    if(document.querySelector('.completion-check')) document.querySelector('.completion-check').classList.add('no-display')
+        if(element){
+        const p = document.createElement('p')
+        if(!element.classList.contains('modal-active-view') && element.classList.contains('bg-red')) {
+            console.log("DO SOMETHING ABUOT IT!")
+            console.log("LIST THE CHECK IMG")
+            completion_check.classList.remove('no-display')
+        }
+    }
+
+
+}
+
 function appendCompletion(element) {
     if(document.querySelector('.completion-btn')) document.querySelector('.completion-btn').remove()
     if(element){
@@ -250,6 +269,7 @@ function activateTemplate(type) {
 function handleCompletion(element) {
     handleVibrate()
     // set li background to red
-    updateItem(element, 'completed')
+    updateItem(element, 'completed');
+
     exitModal()
 }

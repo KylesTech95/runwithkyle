@@ -866,6 +866,35 @@ input, select {
 .modal-video-fixed-top {
     top: 25% !important;
 }
+.completion-check {
+    position:absolute;
+    bottom:11.5px;
+    right:15px;
+
+    padding:2px;
+
+    transform:rotate(20deg);
+
+    border-radius: 50%;
+
+    background:var(--primary-bg);
+
+    height:75px;
+    width:75px;
+
+    animation: flash_completion 2.5s infinite alternate;
+}
+
+@keyframes flash_completion {
+    from {
+        transform:scale(.75) rotate(20deg);
+    } 
+    to {
+        transform:scale(1) rotate(0);
+    }
+}
+
+
 .completion-btn{
     color:#fff;
 

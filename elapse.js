@@ -48,6 +48,7 @@ const time_constraints = {
     }
   }
 }
+
 export default function detectTimeChange(){
   if(document.querySelectorAll('.si-list-item') && document.querySelectorAll('.si-list-item').length > 0){
     let siS = [...document.querySelectorAll('.si-list-item')].filter(x => !x.classList.contains('bg-red'));
@@ -164,6 +165,7 @@ export function updateItem(element, status) {
       element.classList.add('bg-red','si-completed')
 
       camera.classList.add('no-display')
+
     break;
 
     default:
