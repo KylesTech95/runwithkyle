@@ -248,6 +248,17 @@ function processCalendarItem(element) {
 
             sib.textContent = min
         }
+
+        // duration
+        if(sib && /duration/gi.test(cal_label[i].textContent) && parent.id === 'cal-duration') {
+            let typecontainer = [...element.children].find(d => d.id==='type-container');
+
+            if(typecontainer) {
+                let type_p_text = typecontainer.children[1].textContent;
+                
+                sib.textContent = type_p_text
+            }
+        }
         
     }
     

@@ -234,7 +234,8 @@ function scheduleExercise(inputs){
     // console.log("TIME STR", newDateTime)
     // convert datetime to object {date,time}
     let get_datetime = convertTime(newDateTime);
-    get_datetime = {...get_datetime,...{type:inputs.select.value, distance:`${inputs.distance.value} ${inputs.distance_type.value}`}}
+    let time_suff = parseFloat(inputs.duration.value) >= 1 && parseFloat(inputs.duration.value) <= 2 ? 'hours' : 'minutes'
+    get_datetime = {...get_datetime,...{type:inputs.select.value,duration:`${inputs.duration.value} ${time_suff}`, distance:`${inputs.distance.value} ${inputs.distance_type.value}`}}
 
 
     // generate list item
@@ -284,6 +285,8 @@ function scheduleExercise(inputs){
 
         // camera onclick
         camera_btn.onclick = (e) => {
+            if(navigator.vibrate) navigator.vibrate(133);
+            
             let cam = e.target;
             let li = remove_buttons[i];
 
@@ -516,3 +519,15 @@ function scrollToBottom(e){
 
 
 navToggleContainer.onclick = toggleNav;
+
+// click all a-tags
+const allAs = [...document.querySelectorAll('a')]
+allAs.forEach(a => a.onclick = (e) => {
+    // define target & test
+    // const tag = e.target||undefined
+    // console.log(tag)
+
+    // vibration
+    if(navigator.vibrate) navigator.vibrate(133);
+    
+})

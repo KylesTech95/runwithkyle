@@ -1,6 +1,6 @@
 import { getMonth } from "../main.js";
 export default function generateCalendarListItem(datetime) {
-    let {date,time,int,type,distance} = datetime;
+    let {date,time,int,type,distance, duration} = datetime;
     
     // date data
     let [y,m,d] = date.split`-`
@@ -55,6 +55,9 @@ export default function generateCalendarListItem(datetime) {
     // 7. media
     const media = {camera:document.createElement('img'),video:document.createElement('img')}
 
+    // 8. duration
+    const get_duration = document.createElement('p')
+
     // ||
     // ||
     // \/
@@ -65,6 +68,7 @@ export default function generateCalendarListItem(datetime) {
 
     // type textcontent
     get_type.textContent = type;
+    get_duration.textContent = duration;
 
     // reservations
     const {join, leave} = reserve;
@@ -102,6 +106,7 @@ export default function generateCalendarListItem(datetime) {
     timeContainer.append(hours_minutes_seconds)
 
     typeContainer.append(get_type)
+    typeContainer.append(get_duration)
 
     list_item.append(dateContainer)
     list_item.append(typeContainer)

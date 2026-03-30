@@ -683,6 +683,8 @@ cursor:pointer;
 
     padding:.25rem;
 
+    gap:3px;
+
 }
 .camera-btn {
     background:#fff !important;
@@ -708,6 +710,7 @@ cursor:pointer;
 #distance-container > h4,
 #time-container > p,
 #type-container > h4,
+#type-container > p,
 .camera-btn,
 .reserve-btn
 {
@@ -718,6 +721,13 @@ cursor:pointer;
     text-decoration:underline;
     text-underline-offset: 2px;
     text-decoration-color: var(--primary-color);
+}
+#type-container > p{
+    color:var(--primary-color);
+
+    text-align: center;
+
+    font-size:9pt;
 }
 .reserve-btn{
     font-weight:bold;
