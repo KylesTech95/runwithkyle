@@ -613,6 +613,14 @@ cursor:pointer;
     cursor: pointer;
     transform:scale(.98);
 }
+.si-completed{
+    opacity:.7;
+}
+/* .si-glass{
+    backdrop-filter: blur(1.9px);
+    -webkit-backdrop-filter: blur(1.9px);
+} */
+
 .si-list-item {
     animation: rollingRow 7s infinite alternate forwards;
 

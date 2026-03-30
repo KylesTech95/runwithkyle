@@ -161,7 +161,7 @@ export function updateItem(element, status) {
       element.classList.remove('bg-yellow')
       element.classList.remove('modal-active-view')
       
-      element.classList.add('bg-red')
+      element.classList.add('bg-red','si-completed')
 
       camera.classList.add('no-display')
     break;

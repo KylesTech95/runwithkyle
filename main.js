@@ -17,9 +17,15 @@ const maxBars = 2;
 const window_type = 'general'
 const motive_quote = document.getElementById('motivation-quotation');
 
+const schedules = {
+    testing:{
+        element:document.getElementById('rwk-schedule'),
+        ul:document.querySelector('#rwk-schedule > .scheduled-item-list-container')
+    },
+    kyles:document.getElementById('kyles-schedule'),
+}
 export let modal_enabled = false;
 export let localvideoStreamMain;
-
 
 
 // object data
@@ -131,15 +137,24 @@ function toggleNav(e) {
 
                 navigation_commander.mobile.enabled = true;
 
+                const navItems = [...nav_container_mobile.children]
+                console.log(navItems)
+                // onclick
+                navItems.map(n=> {
+                    n.onclick = () => {
+                        console.log(n)
+
+                        toggleNav(e)
+                    }
+                })
             } else {
-                navigation_commander.mobile.enabled = false;
+                 navigation_commander.mobile.enabled = false;
                 // remove the class
                 span1.classList.remove(cross + nts1)
                 span2.classList.remove(cross + nts2)
 
-                // add no-pointer / disable click
-                navContainerMobile.classList.add('no-pointer')
-
+    // add no-pointer / disable click
+    navContainerMobile.classList.add('no-pointer')
             }
 
             // if 
@@ -157,6 +172,7 @@ function toggleNav(e) {
         nav_container_mobile.classList.remove(mobile_nav_open);
     }
 }
+
 // convert time from date.now() to m/d/time/etc...
 export function convertTime(num){ // integer
     const newDate = new Date(num);
@@ -224,6 +240,9 @@ function scheduleExercise(inputs){
     let listitem = generateCalendarListItem(get_datetime);
     shedule_list_container.appendChild(listitem) // append listitem to ul
     
+    // scroll schedule to bottom
+    scrollToBottom(schedules.testing.element)
+
     const event_in_progress = [...document.querySelectorAll('.si-list-item')].length > 0 && [...document.querySelectorAll('.si-list-item')].find(x => x.classList.contains('bg-green'));
     console.log([...document.querySelectorAll('.si-list-item')])
     console.log("EVENT IN PROGRESS",event_in_progress)
@@ -485,7 +504,13 @@ function loopItems(index = 0) {
 // Start the loop
 loopItems();
 
+function scrollToBottom(e){
+    const target = e
 
+    if(target){
+        target.scrollTop = target.scrollHeight;
+    }
+}
 
 
 
