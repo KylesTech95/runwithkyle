@@ -1,5 +1,5 @@
 import { convertTime, confirm_prompt } from "../main.js";
-import { updateItem } from "../elapse.js";
+import { updateItem, hideNavTime, showNavTime} from "../elapse.js";
 import { handleVibrate } from "../main.js";
 import { startCamera } from "./camera.js";
 /* ------------------------------------------- */
@@ -40,6 +40,7 @@ export default function view_modal(type, options = {calendar:{li:undefined}}) {
         appendCompletion(options.calendar.li);
         detectCompletion(options.calendar.li)
 
+        detectInprogress(options.calendar.li)
         
         break;
 
@@ -180,6 +181,17 @@ if(!modal.classList.contains('no-display')){
         // turn off camera
         startCamera(false)
 }
+}
+
+function detectInprogress(element){
+    if(!element) return false;
+    const notInProgress = element.classList.contains('bg-green')
+
+    if(!notInProgress){
+        hideNavTime()
+    } else {
+        showNavTime()
+    }
 }
 
 function processCalendarItem(element) {

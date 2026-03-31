@@ -1252,3 +1252,46 @@ section#modal-container {
         transform:translate(-7px,7px)
     }
 }
+
+
+
+/* #nagivation-time-container*/
+
+#navigation-time-container{
+
+    /* border:2px solid var(--border-abstract); */
+
+    width:100%;
+
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap:1rem;
+
+}
+#nt-playback-container > img {
+height:50px;
+}
+#nt-playback-container {
+    /* border:2px solid green; */
+    
+    min-height:25px;
+    
+    min-width:250px;
+
+    display:flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.nt-row {
+    display:flex;
+
+    gap:2px;
+}
+
+.nt-row > p {
+    font-size:18pt;
+}
+

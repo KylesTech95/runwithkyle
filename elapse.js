@@ -173,3 +173,10 @@ export function updateItem(element, status) {
     break;
   }
 }
+
+export function showNavTime(){
+  document.getElementById('navigation-time-container').classList.remove('no-display');
+}
+export function hideNavTime(){
+  document.getElementById('navigation-time-container').classList.add('no-display');
+}
