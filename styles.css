@@ -1222,9 +1222,33 @@ section#modal-container {
 
 .gallery-img-container {
     background:var(--secondary-color);
+
 }
 .gallery-img-container > img {
     /* width:100%; */
     /* height:100%; */
     height:550px;
+
+}
+.rigid1{
+    animation:rigidTrans 8s forwards infinite alternate;
+}
+.rigid2{
+    animation:rigidTrans2 8s forwards infinite alternate;
+}
+@keyframes rigidTrans {
+    from {
+        transform:translate(0,0)
+    }
+    to {
+        transform:translate(7px,7px)
+    }
+}
+@keyframes rigidTrans2 {
+    from {
+        transform:translate(0,0)
+    }
+    to {
+        transform:translate(-7px,7px)
+    }
 }
