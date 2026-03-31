@@ -9,6 +9,9 @@
         font-weight: bold;
         font-size:9pt;
     }
+    /* #rwk-contact {
+        justify-content: start !important;
+    } */
     #datetime-submit {
         font-size:9pt;
     }
@@ -46,6 +49,11 @@
     #nav-toggle-container {
         display:flex;
         visibility: visible;
+        
+        position:fixed;
+
+        top: 0px !important;
+        right:5px; 
     }
 
     /* logo */
@@ -66,6 +74,7 @@
 
     #nav-list-container-mobile {
         display:flex;
+        top:95px;
     }
     /* mobile nav open if enabled */
     .mobile-nav-open{
@@ -112,13 +121,21 @@
     #nav-toggle-container {
         display:flex;
         visibility: visible;
+        
+        position:fixed;
+
+        top: 0px !important;
+        right:5px; 
     }
 
     /* logo */
     #logo-container {
         /* border:5px solid var(--border-abstract); */
-
+        
         float:left;
+
+        margin:0
+
     }
 
     #nav-list-container {
@@ -127,6 +144,8 @@
 
     #nav-list-container-mobile {
         display:flex;
+        top:95px;
+
     }
     /* mobile nav open if enabled */
     .mobile-nav-open{
@@ -143,5 +162,9 @@
 
 section#modal-container {
     height:100% !important;
+}
+
+.reduce-height{
+    height:80px !important;
 }
 }

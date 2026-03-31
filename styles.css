@@ -149,7 +149,10 @@ body {
 #wrapper {
 
 }
+
 header {
+    transition:.25s; 
+
     width:100%;
     /* min-height:55px; */
 
@@ -339,6 +342,28 @@ nav#nav{
 /* general */
 /* ______________________________ */
 
+.coming-soon{
+    background:var(--alert-color);
+
+    font-size:9pt;
+
+    opacity: .88;
+
+    transform:rotate(30deg);
+
+    position:absolute;
+
+    top:25%;
+
+    padding:4px;
+
+    z-index:997;
+
+}
+.back-glow {
+    box-shadow: 0 .125rem 8px .9px var(--tertiary-color)
+}
+
 /* Hide scrollbar for Chrome, Safari and Opera */
 .scroll-container::-webkit-scrollbar {
     display: none;
@@ -486,8 +511,15 @@ div.products-section-col {
 
     gap:8px;
 
-}   
+    position: relative;
 
+}   
+.products-img{
+    height:50px;
+
+    z-index:998;
+
+}
 
 #products-wrapper{
     /* border:2px solid red; */
@@ -498,6 +530,7 @@ div.products-section-col {
     
     gap:1rem;
 }
+
 .products-label {
     font-size:11pt;
 
@@ -511,6 +544,76 @@ div.products-section-col {
 }
 #rwk-schedule {
     max-height:50vh;
+}
+#rwk-contact {
+    width:98% !important;
+
+    min-height:200px;
+
+    display:flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: start;
+
+    position:relative;
+
+}
+
+#contact-list-container {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+
+    width:66%;
+    
+    /* border:2px solid red; */
+}
+
+.contact-list-link > .contact-img{
+height:33px;
+}
+.contact-list-link {
+    text-decoration: none;
+
+    color: var(--primary-color);
+
+    gap:4px;
+}
+.contact-list-link ,
+.contact-list-item {
+    /* border:2px solid red; */
+
+    overflow:hidden;
+
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding:4px;
+}
+.fixed-logo {
+    position:absolute;
+    bottom:-10px;
+    left:-10px;
+
+    transform:scale(.78)
+}
+.contact-label {
+    font-size:9pt;
+}
+.contact-img {
+    height:50px;
+
+    padding:4px;
+
+    border-radius: 50%;
+    border:2px solid var(--border-primary);
+
+    background:ghostwhite;
 }
 #rwk-products > div > img{
     height:100px;
@@ -790,6 +893,10 @@ cursor:pointer;
 input, select {
     height:35px;
     outline: none !important;
+}
+
+a{
+    outline:none;
 }
 
 #input-container{

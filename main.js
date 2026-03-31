@@ -6,6 +6,7 @@ import { startCamera } from "./component/camera.js";
 import phrases from './dataset/motivational_phrases.json' with {type:'json'}
 import minis from './dataset/motivational_phrases.json' with {type:'json'}
 // vars (variables)
+const header_element = document.querySelector('header')
 const navContainerMobile = document.getElementById('nav-list-container-mobile');
 const navToggleContainer = document.getElementById('nav-toggle-container')
 const nav_container = document.getElementById('nav-list-container')
@@ -139,11 +140,9 @@ function toggleNav(e) {
                 navigation_commander.mobile.enabled = true;
 
                 const navItems = [...nav_container_mobile.children]
-                console.log(navItems)
                 // onclick
                 navItems.map(n=> {
                     n.onclick = () => {
-                        console.log(n)
 
                         toggleNav(e)
                     }
@@ -246,8 +245,8 @@ function scheduleExercise(inputs){
     scrollToBottom(schedules.testing.element)
 
     const event_in_progress = [...document.querySelectorAll('.si-list-item')].length > 0 && [...document.querySelectorAll('.si-list-item')].find(x => x.classList.contains('bg-green'));
-    console.log([...document.querySelectorAll('.si-list-item')])
-    console.log("EVENT IN PROGRESS",event_in_progress)
+    // console.log([...document.querySelectorAll('.si-list-item')])
+    // console.log("EVENT IN PROGRESS",event_in_progress)
     if(event_in_progress){
         listitem.remove();
         console.warn('scheduleExercise: Event is in progress')
@@ -290,7 +289,6 @@ function scheduleExercise(inputs){
             let cam = e.target;
             let li = remove_buttons[i];
 
-            console.log('camera is clicked!');
             // prompt question
             const take_picture = 'Access camera ?';
             
@@ -315,8 +313,6 @@ function scheduleExercise(inputs){
         // join exercise
         const join_btn = [...remove_buttons[i].children].find(ch => /join/gi.test(ch.textContent))
         const leave_btn = [...remove_buttons[i].children].find(ch => /leave/gi.test(ch.textContent))
-        console.log(join_btn)
-        console.log(leave_btn)
         if(join_btn) {
             // click on join btn
             join_btn.onclick = e => {
@@ -444,7 +440,6 @@ export function confirm_prompt(question) {
 function steamVideo(li,cam) {
     cam.classList.add('camera-on')
 
-    console.log('taking picture soon !')
 
     view_modal('camera', {calendar : {li : li}})
 
@@ -461,7 +456,6 @@ function appendMotivation(phrase) {
         motive_quote.classList.remove('no-display')
         motive_quote.classList.add('appear-motive')
 
-        console.log(phrase)
         
     }
 }
@@ -480,9 +474,6 @@ function loopItems(index = 0) {
     
     let currIdx = localStorage.getItem('moto_index') || '0';
 
-    console.log(currIdx)
-
-    console.log('APPEND MESSAGE!')
     appendMotivation(items[currIdx])
 
     // append message to the DOM
@@ -531,3 +522,15 @@ allAs.forEach(a => a.onclick = (e) => {
     if(navigator.vibrate) navigator.vibrate(133);
     
 })
+
+
+window.onscroll = (e) => {
+    let scrollY = window.scrollY;
+    if(scrollY > 0) {
+        // header_element.classList.add('reduce-height')
+        header_element.classList.add('back-glow')
+    } else {
+        // header_element.classList.remove('reduce-height')
+        header_element.classList.remove('back-glow')
+    }
+}

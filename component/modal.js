@@ -136,8 +136,6 @@ function detectCompletion(element) {
         if(element){
         const p = document.createElement('p')
         if(!element.classList.contains('modal-active-view') && element.classList.contains('bg-red')) {
-            console.log("DO SOMETHING ABUOT IT!")
-            console.log("LIST THE CHECK IMG")
             completion_check.classList.remove('no-display')
         }
     }

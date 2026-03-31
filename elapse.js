@@ -83,7 +83,7 @@ export default function detectTimeChange(){
       handleTimeConstraints(timeobj,s)
     })
 } else {
-  console.warn('pending list items')
+  // console.warn('pending list items')
 }
 }
 
@@ -98,9 +98,9 @@ function handleTimeConstraints(obj,li) {
   // console.log(minutes)
 
   if(!hours || hours < 1) {
-    let x_hour_warning = Object.keys(time_constraints['hour']).find(x => (Number(x) - hours) === 1 ) || false;
+    // let x_hour_warning = Object.keys(time_constraints['hour']).find(x => (Number(x) - hours) === 1 ) || false;
 
-      x_hour_warning ? console.log(x_hour_warning + " hour warning !") : null;
+    //   x_hour_warning ? console.log(x_hour_warning + " hour warning !") : null;
 
     if(!minutes || minutes < 1){
 
