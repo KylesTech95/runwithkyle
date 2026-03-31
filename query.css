@@ -1,5 +1,10 @@
 /* Extra Small Mobile (Portrait - 320px to 480px) */
 @media only screen and (max-width: 480px) {
+
+    .gallery-img-container > img {
+        width:100%;
+        height:100%;
+    }
     /* motivation */
     /* ______________________________ */
     #motivation-quotation {
@@ -92,6 +97,9 @@
 #motivation-quotation {
     font-size:9pt;
 }
+.gallery-img-container > img {
+        height:350px;
+    }
     /* modal */
 .modal-video-fixed-top {
     top: 35% !important;

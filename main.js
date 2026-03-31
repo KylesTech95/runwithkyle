@@ -12,7 +12,11 @@ const navToggleContainer = document.getElementById('nav-toggle-container')
 const nav_container = document.getElementById('nav-list-container')
 const nav_container_mobile = document.getElementById('nav-list-container-mobile')
 const mobile_nav_open = 'mobile-nav-open';
-const shedule_list_container = document.getElementById('scheduled-item-list-container')
+const shedule_list_container = {
+    testing:document.querySelector('#rwk-schedule > #scheduled-item-list-container'),
+    client:document.querySelector('#client-schedule > #scheduled-item-list-container'),
+    kyles:document.querySelector('#kyles-schedule > #scheduled-item-list-container')
+}
 const datetime_submit = document.getElementById('datetime-submit')
 const maxBars = 2;
 const window_type = 'general'
@@ -239,7 +243,7 @@ function scheduleExercise(inputs){
 
     // generate list item
     let listitem = generateCalendarListItem(get_datetime);
-    shedule_list_container.appendChild(listitem) // append listitem to ul
+    shedule_list_container.testing.appendChild(listitem) // append listitem to ul
     
     // scroll schedule to bottom
     scrollToBottom(schedules.testing.element)
@@ -255,12 +259,12 @@ function scheduleExercise(inputs){
     }
 
     // sort schedule container
-    let current_children = [...shedule_list_container.children];
+    let current_children = [...shedule_list_container.testing.children];
     let sort_children = [...current_children].sort((a,b) => {
         return +a.getAttribute('--data-datetime') - +b.getAttribute('--data-datetime')
     })
     // replace children with sorted
-    shedule_list_container.replaceChildren(...sort_children)
+    shedule_list_container.testing.replaceChildren(...sort_children)
 
     // enable clients to view an exercise
     reviewExercise(document.querySelectorAll('.si-list-item'))
@@ -277,7 +281,7 @@ function scheduleExercise(inputs){
 
 
     // handle removal of item
-    let remove_buttons = [...shedule_list_container.children]
+    let remove_buttons = [...shedule_list_container.testing.children]
     for(let i = 0; i < remove_buttons.length; i++) {
         let camera_btn = [...remove_buttons[i].children].find(x => x.classList.contains('camera-btn'))
         let rm_btn = [...remove_buttons[i].children].find(x => x.classList.contains('remove-button'));
@@ -306,7 +310,7 @@ function scheduleExercise(inputs){
 
             // remove items
             const removal_message = 'Remove Calendar Item ?'
-            remove_buttons = confirm_prompt(removal_message).then(d => removeItem(shedule_list_container, getIndex))
+            remove_buttons = confirm_prompt(removal_message).then(d => removeItem(shedule_list_container.testing, getIndex))
 
         }
 
@@ -381,13 +385,13 @@ function removeItem(container,index){
 }
 // test - handle schedule item removal with keydown (testing site)
 function handle_schedule_item_removal(e) {
-        if(shedule_list_container.children.length < 1){
+        if(shedule_list_container.testing.children.length < 1){
             console.warn('handle_schedule_item_removal: Pending children')
         }
         let key = e.key;
-        if(shedule_list_container.children){
+        if(shedule_list_container.testing.children){
              if(/[0-9]/.test(key)){
-                removeItem(shedule_list_container, +key)
+                removeItem(shedule_list_container.testing, +key)
             } else {
                 console.warn('select an integer')
             }
