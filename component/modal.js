@@ -3,7 +3,11 @@ import { updateItem, hideNavTime, showNavTime} from "../elapse.js";
 import { handleVibrate } from "../main.js";
 import { startCamera } from "./camera.js";
 /* ------------------------------------------- */
-
+const playback = {
+    play:false,
+    pause:false,
+    stop:false,
+}
 const modal = document.getElementById('modal-container')
 const body = document.body;
 const wrapper = document.getElementById('wrapper')
@@ -191,6 +195,45 @@ function detectInprogress(element){
         hideNavTime()
     } else {
         showNavTime()
+
+
+        let position = null;
+
+        for(let i in playback){
+            let playback_element = document.getElementById(`nav-${i}`);
+
+            playback_element.onclick = () => {
+                // send all properties to false
+                Object.keys(playback).map(pb => playback[pb] = false)
+
+                if(i){
+                    playback[i] = true;
+                    if(i === 'stop') return;
+
+                    playback_element.classList.add('no-display')
+                    
+                    if(i==='play'){ // play
+                        
+                        document.getElementById('nav-pause').classList.remove('no-display')
+                        document.getElementById('nav-stop').classList.remove('no-display')
+                        handle_navigation_series(position)
+                        console.log('starting our event!')
+
+                        
+                    } 
+                    if(i==='pause'){ // pause
+                        
+                        document.getElementById('nav-play').classList.remove('no-display')
+                        document.getElementById('nav-stop').classList.add('no-display')
+                        handle_navigation_series(position)
+                        console.log('pausing our event!')
+
+                    } 
+                }
+                console.log(playback)
+            }
+        }
+
     }
 }
 
@@ -293,4 +336,83 @@ function handleCompletion(element) {
     updateItem(element, 'completed');
 
     exitModal()
+}
+
+function handle_navigation_series(position){
+    console.log(position)
+    
+    if(!playback.play && playback.pause) {
+        console.log('waiting for play');
+        console.log(position)
+        return position;
+    }
+    if ("geolocation" in navigator) {
+        // Geolocation is available
+        var watchId = navigator.geolocation.watchPosition(
+            showPosition, 
+            showError, 
+            { enableHighAccuracy: true } // Request high accuracy
+        );
+    } else {
+        // Geolocation is not supported
+        alert("Geolocation is not supported by this browser.");
+    }
+
+    function showError(error) {
+        switch(error.code) {
+            case error.PERMISSION_DENIED:
+                console.error("User denied the request for Geolocation.");
+                break;
+            case error.POSITION_UNAVAILABLE:
+                console.error("Location information is unavailable.");
+                break;
+            case error.TIMEOUT:
+                console.error("The request to get user location timed out.");
+                break;
+            case error.UNKNOWN_ERROR:
+                console.error("An unknown error occurred.");
+                break;
+        }
+    }
+
+    var prevPosition = null;
+    var totalDistance = 0; // In kilometers
+
+    function showPosition(position) {
+        var currentLat = position.coords.latitude;
+        var currentLon = position.coords.longitude;
+
+        if (prevPosition) {
+            var lat1 = prevPosition.coords.latitude;
+            var lon1 = prevPosition.coords.longitude;
+            var segmentDistance = calculateDistance(lat1, lon1, currentLat, currentLon);
+            
+            // Add the new segment distance to the total distance
+            totalDistance += segmentDistance;
+            
+            console.log("Segment distance: " + segmentDistance.toFixed(2) + " km");
+            console.log("Total distance traveled: " + totalDistance.toFixed(2) + " km");
+        }
+
+        // Update the previous position to the current position for the next update
+        prevPosition = position.coords;
+        
+        // Update UI elements as needed
+        document.querySelector(".distance-num").innerHTML = totalDistance.toFixed(2) //+ " km";
+    }
+    
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371; // Radius of the Earth in kilometers
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c;
+        return distance; // Returns the distance in kilometers
+    }
+
+        return position;
+
 }
