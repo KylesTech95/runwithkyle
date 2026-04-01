@@ -198,6 +198,8 @@ function detectInprogress(element){
 
 
         let position = null;
+        let prevPosition = null;
+        let totalDistance = 0; // In kilometers
 
         for(let i in playback){
             let playback_element = document.getElementById(`nav-${i}`);
@@ -213,19 +215,100 @@ function detectInprogress(element){
                     playback_element.classList.add('no-display')
                     
                     if(i==='play'){ // play
-                        
+                        // nav series
+                        if(!playback.play && playback.pause) {
+                            console.warn('current state = pause');
+                            
+                        }
                         document.getElementById('nav-pause').classList.remove('no-display')
                         document.getElementById('nav-stop').classList.remove('no-display')
-                        handle_navigation_series(position)
                         console.log('starting our event!')
+
+
+                    
+                    if ("geolocation" in navigator) {
+                        // Geolocation is available
+                        var watchId = navigator.geolocation.watchPosition(
+                            showPosition, 
+                            showError, 
+                            { enableHighAccuracy: true } // Request high accuracy
+                        );
+
+                        console.log(watchId)
+                    } else {
+                        // Geolocation is not supported
+                        alert("Geolocation is not supported by this browser.");
+                    }
+
+                    function showError(error) {
+                        switch(error.code) {
+                            case error.PERMISSION_DENIED:
+                                console.error("User denied the request for Geolocation.");
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                console.error("Location information is unavailable.");
+                                break;
+                            case error.TIMEOUT:
+                                console.error("The request to get user location timed out.");
+                                break;
+                            case error.UNKNOWN_ERROR:
+                                console.error("An unknown error occurred.");
+                                break;
+                        }
+                    }
+
+                    function showPosition(position) {
+                        var currentLat = position.coords.latitude;
+                        var currentLon = position.coords.longitude;
+
+                        if (prevPosition && prevPosition.coords) {
+                            var lat1 = prevPosition.coords.latitude;
+                            var lon1 = prevPosition.coords.longitude;
+                            var segmentDistance = calculateDistance(lat1, lon1, currentLat, currentLon);
+                            
+                            // Add the new segment distance to the total distance
+                            totalDistance += segmentDistance; 
+                            
+                            // convert from km to miles
+                            totalDistance = convertDistance(totalDistance,'kilometer','mile').toFixed(2)
+
+                            console.log("Segment distance: " + segmentDistance.toFixed(2) + " km");
+                            console.log("Total distance traveled: " + convertDistance(totalDistance,'kilometer','mile').toFixed(2) + " miles");
+                        }
+                        
+                        // Update the previous position to the current position for the next update
+                        prevPosition = position.coords;
+                        
+                        // Update UI elements as needed
+                        document.querySelector(".distance-num").innerHTML = totalDistance.toFixed(2) //+ " km";
+
+                        console.log(prevPosition)
+                    }
+                    
+                    function calculateDistance(lat1, lon1, lat2, lon2) {
+                        const R = 6371; // Radius of the Earth in kilometers
+                        const dLat = (lat2 - lat1) * Math.PI / 180;
+                        const dLon = (lon2 - lon1) * Math.PI / 180;
+                        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                        const distance = R * c;
+                        return distance; // Returns the distance in kilometers
+                    }
+
 
                         
                     } 
                     if(i==='pause'){ // pause
+                        // nav series
+                        if(playback.play && !playback.pause) {
+                            console.warn('current state = play');
+                            
+                        }
                         
                         document.getElementById('nav-play').classList.remove('no-display')
                         document.getElementById('nav-stop').classList.add('no-display')
-                        handle_navigation_series(position)
                         console.log('pausing our event!')
 
                     } 
@@ -338,81 +421,11 @@ function handleCompletion(element) {
     exitModal()
 }
 
-function handle_navigation_series(position){
-    console.log(position)
-    
-    if(!playback.play && playback.pause) {
-        console.log('waiting for play');
-        console.log(position)
-        return position;
+function convertDistance(num,from,to) {
+    const conversions = {
+        kilometer_mile:1.609,
     }
-    if ("geolocation" in navigator) {
-        // Geolocation is available
-        var watchId = navigator.geolocation.watchPosition(
-            showPosition, 
-            showError, 
-            { enableHighAccuracy: true } // Request high accuracy
-        );
-    } else {
-        // Geolocation is not supported
-        alert("Geolocation is not supported by this browser.");
-    }
-
-    function showError(error) {
-        switch(error.code) {
-            case error.PERMISSION_DENIED:
-                console.error("User denied the request for Geolocation.");
-                break;
-            case error.POSITION_UNAVAILABLE:
-                console.error("Location information is unavailable.");
-                break;
-            case error.TIMEOUT:
-                console.error("The request to get user location timed out.");
-                break;
-            case error.UNKNOWN_ERROR:
-                console.error("An unknown error occurred.");
-                break;
-        }
-    }
-
-    var prevPosition = null;
-    var totalDistance = 0; // In kilometers
-
-    function showPosition(position) {
-        var currentLat = position.coords.latitude;
-        var currentLon = position.coords.longitude;
-
-        if (prevPosition) {
-            var lat1 = prevPosition.coords.latitude;
-            var lon1 = prevPosition.coords.longitude;
-            var segmentDistance = calculateDistance(lat1, lon1, currentLat, currentLon);
-            
-            // Add the new segment distance to the total distance
-            totalDistance += segmentDistance;
-            
-            console.log("Segment distance: " + segmentDistance.toFixed(2) + " km");
-            console.log("Total distance traveled: " + totalDistance.toFixed(2) + " km");
-        }
-
-        // Update the previous position to the current position for the next update
-        prevPosition = position.coords;
-        
-        // Update UI elements as needed
-        document.querySelector(".distance-num").innerHTML = totalDistance.toFixed(2) //+ " km";
-    }
-    
-    function calculateDistance(lat1, lon1, lat2, lon2) {
-        const R = 6371; // Radius of the Earth in kilometers
-        const dLat = (lat2 - lat1) * Math.PI / 180;
-        const dLon = (lon2 - lon1) * Math.PI / 180;
-        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-                Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        const distance = R * c;
-        return distance; // Returns the distance in kilometers
-    }
-
-        return position;
+    return conversions.hasOwnProperty(`${from}_${to}`) ?  num %= conversions[`${from}_${to}`] : num
 
 }
+
