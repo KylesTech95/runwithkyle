@@ -211,6 +211,7 @@ function detectInprogress(element){
                     if(i === 'stop') return;
 
                     playback_element.classList.add('no-display')
+                    let watchId;
                     
                     if(i==='play'){ // play
                         // nav series
@@ -228,7 +229,7 @@ function detectInprogress(element){
 
                         // 1. Start Tracking
                         if ("geolocation" in navigator) {
-                            navigator.geolocation.watchPosition(
+                          watchId = navigator.geolocation.watchPosition(
                                 updatePosition,
                                 (error) => console.error("Error:", error),
                                 { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
@@ -280,9 +281,9 @@ function detectInprogress(element){
                     } 
                     if(i==='pause'){ // pause
                         // nav series
-                        if(playback.play && !playback.pause) {
-                            console.warn('current state = play');
-                            
+                        if (watchId !== null) {
+                            navigator.geolocation.clearWatch(watchId);
+                            watchId = null; // Reset to indicate it's paused
                         }
                         
                         document.getElementById('nav-play').classList.remove('no-display')
