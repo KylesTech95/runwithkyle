@@ -203,6 +203,7 @@ function detectInprogress(element){
             let playback_element = document.getElementById(`nav-${i}`);
 
             playback_element.onclick = () => {
+                handleVibrate()
                 // send all properties to false
                 Object.keys(playback).map(pb => playback[pb] = false)
 
