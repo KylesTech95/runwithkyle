@@ -284,12 +284,13 @@ function detectInprogress(element){
                         // nav series
                         if (watchId !== null) {
                             navigator.geolocation.clearWatch(watchId);
+                            document.querySelector('.distance-num').textContent = document.querySelector('.distance-num').textContent;
                         }
                         
                         document.getElementById('nav-play').classList.remove('no-display')
                         document.getElementById('nav-stop').classList.add('no-display')
                         console.log('pausing our event!')
-
+                        return;
                     } 
                 }
             }
