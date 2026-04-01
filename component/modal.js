@@ -284,7 +284,6 @@ function detectInprogress(element){
                         // nav series
                         if (watchId !== null) {
                             navigator.geolocation.clearWatch(watchId);
-                            watchId = null; // Reset to indicate it's paused
                         }
                         
                         document.getElementById('nav-play').classList.remove('no-display')
