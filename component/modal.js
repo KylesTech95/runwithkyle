@@ -2,6 +2,7 @@ import { convertTime, confirm_prompt } from "../main.js";
 import { updateItem, hideNavTime, showNavTime} from "../elapse.js";
 import { handleVibrate } from "../main.js";
 import { startCamera } from "./camera.js";
+
 /* ------------------------------------------- */
 const playback = {
     play:false,
@@ -197,9 +198,6 @@ function detectInprogress(element){
         showNavTime()
 
 
-        let position = null;
-        let prevPosition = null;
-        let totalDistance = 0; // In kilometers
 
         for(let i in playback){
             let playback_element = document.getElementById(`nav-${i}`);
@@ -216,89 +214,69 @@ function detectInprogress(element){
                     
                     if(i==='play'){ // play
                         // nav series
-                        if(!playback.play && playback.pause) {
-                            console.warn('current state = pause');
-                            
-                        }
+                        
                         document.getElementById('nav-pause').classList.remove('no-display')
                         document.getElementById('nav-stop').classList.remove('no-display')
                         console.log('starting our event!')
 
 
-                    
-                    if ("geolocation" in navigator) {
-                        // Geolocation is available
-                        var watchId = navigator.geolocation.watchPosition(
-                            showPosition, 
-                            showError, 
-                            { enableHighAccuracy: true } // Request high accuracy
-                        );
+                        let totalDistanceMiles = 0;
+                        let lastPosition = null;
 
-                        console.log(watchId)
-                    } else {
-                        // Geolocation is not supported
-                        alert("Geolocation is not supported by this browser.");
-                    }
+                        // Radius of the Earth in miles
+                        const EARTH_RADIUS_MILES = 3958.8;
 
-                    function showError(error) {
-                        switch(error.code) {
-                            case error.PERMISSION_DENIED:
-                                console.error("User denied the request for Geolocation.");
-                                break;
-                            case error.POSITION_UNAVAILABLE:
-                                console.error("Location information is unavailable.");
-                                break;
-                            case error.TIMEOUT:
-                                console.error("The request to get user location timed out.");
-                                break;
-                            case error.UNKNOWN_ERROR:
-                                console.error("An unknown error occurred.");
-                                break;
+                        // 1. Start Tracking
+                        if ("geolocation" in navigator) {
+                            navigator.geolocation.watchPosition(
+                                updatePosition,
+                                (error) => console.error("Error:", error),
+                                { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
+                            );
+                        } else {
+                            alert("Geolocation not supported");
                         }
-                    }
 
-                    function showPosition(position) {
-                        var currentLat = position.coords.latitude;
-                        var currentLon = position.coords.longitude;
+                        // 2. Callback function on location change
+                        function updatePosition(position) {
+                            const currentPosition = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude
+                            };
 
-                        if (prevPosition && prevPosition.coords) {
-                            var lat1 = prevPosition.coords.latitude;
-                            var lon1 = prevPosition.coords.longitude;
-                            var segmentDistance = calculateDistance(lat1, lon1, currentLat, currentLon);
-                            
-                            // Add the new segment distance to the total distance
-                            totalDistance += segmentDistance; 
-                            
-                            // convert from km to miles
-                            totalDistance = convertDistance(totalDistance,'kilometer','mile').toFixed(2)
+                            if (lastPosition) {
+                                // Calculate distance between last and current point
+                                const distance = haversineDistance(
+                                    lastPosition.lat, lastPosition.lng,
+                                    currentPosition.lat, currentPosition.lng
+                                );
+                                totalDistanceMiles += distance;
+                                console.log(`Segment: ${distance.toFixed(2)} mi`);
+                                console.log(`Total: ${totalDistanceMiles.toFixed(2)} mi`);
 
-                            console.log("Segment distance: " + segmentDistance.toFixed(2) + " km");
-                            console.log("Total distance traveled: " + convertDistance(totalDistance,'kilometer','mile').toFixed(2) + " miles");
+                                document.querySelector('.distance-num').textContent = totalDistanceMiles.toFixed(2);
+                            }
+
+                            lastPosition = currentPosition;
                         }
-                        
-                        // Update the previous position to the current position for the next update
-                        prevPosition = position.coords;
-                        
-                        // Update UI elements as needed
-                        document.querySelector(".distance-num").innerHTML = totalDistance.toFixed(2) //+ " km";
 
-                        console.log(prevPosition)
-                    }
-                    
-                    function calculateDistance(lat1, lon1, lat2, lon2) {
-                        const R = 6371; // Radius of the Earth in kilometers
-                        const dLat = (lat2 - lat1) * Math.PI / 180;
-                        const dLon = (lon2 - lon1) * Math.PI / 180;
-                        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-                                Math.sin(dLon / 2) * Math.sin(dLon / 2);
-                        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-                        const distance = R * c;
-                        return distance; // Returns the distance in kilometers
-                    }
+                        // 3. Haversine Formula Converter
+                        function haversineDistance(lat1, lon1, lat2, lon2) {
+                            const dLat = toRad(lat2 - lat1);
+                            const dLon = toRad(lon2 - lon1);
+                            
+                            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                                    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+                                    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                            
+                            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                                                return EARTH_RADIUS_MILES * c; // Distance in miles
+                                }
 
-
-                        
+                        // Helper: Degree to Radian
+                        function toRad(value) {
+                            return value * Math.PI / 180;
+                        }
                     } 
                     if(i==='pause'){ // pause
                         // nav series
@@ -313,7 +291,6 @@ function detectInprogress(element){
 
                     } 
                 }
-                console.log(playback)
             }
         }
 
@@ -429,3 +406,35 @@ function convertDistance(num,from,to) {
 
 }
 
+
+function targetCurrentPosition(){
+
+if ("geolocation" in navigator) {
+  // Geolocation is available
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      // Success callback
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+
+      console.log("latitude:", latitude);
+      console.log("longitude:", longitude);
+      return {latitude:latitude, longitude:longitude}
+      // Do something with the coordinates, e.g., display on a map
+    },
+    (error) => {
+      // Error callback
+      console.error("Error getting location:", error.message);
+    },
+    {
+      // Optional options
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    }
+  );
+} else {
+  // Geolocation is not supported by the browser
+  console.log("Geolocation is not supported by this browser.");
+}
+}
