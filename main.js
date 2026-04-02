@@ -1,6 +1,6 @@
 // imports
 import generateCalendarListItem from "./component/calendar.js";
-import view_modal from "./component/modal.js";
+import {view_modal, abortRunningSession} from "./component/modal.js";
 import detectTimeChange from "./elapse.js";
 import { startCamera } from "./component/camera.js";
 import phrases from './dataset/motivational_phrases.json' with {type:'json'}
@@ -305,6 +305,10 @@ function scheduleExercise(inputs){
 
             // parent.onclick = null;
 
+            const inprogress = parent.classList.contains('bg-green')
+            
+            if(inprogress) abortRunningSession()
+
             // get current index
             let getIndex = [...document.querySelectorAll('.si-list-item')].indexOf(parent)
 
@@ -365,6 +369,9 @@ function removeItem(container,index){
         console.error('no arguments. check again')
         return;
     }
+
+
+    
 
     // hide modal
     view_modal('exit')

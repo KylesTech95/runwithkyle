@@ -9,13 +9,18 @@ const playback = {
     pause:false,
     stop:false,
 }
+let global_totalDistance = null;
+let totalDistanceMiles = 0;
+let watchId;
+
 const modal = document.getElementById('modal-container')
 const body = document.body;
 const wrapper = document.getElementById('wrapper')
 const window_type = 'modal'
 const completion_check = document.querySelector('.completion-check')
+const distanceNumContainer = document.getElementById('nt-distance-container')
 
-export default function view_modal(type, options = {calendar:{li:undefined}}) {
+export function view_modal(type, options = {calendar:{li:undefined}}) {
 
     if(completion_check)completion_check.classList.add('no-display')
 
@@ -81,6 +86,47 @@ export default function view_modal(type, options = {calendar:{li:undefined}}) {
         break;
     }
 }
+let conversion_items = ['kilometers','miles','meters'] // conversions
+let c_idx = 1; // starting index
+const conversion_helper = {
+    kilometers:'km',
+    miles:'mi',
+    meters:'meters'
+}
+function toggleDistance(e) {
+    c_idx++ // increate the index (starting is miles)
+    c_idx %= conversion_items.length;
+    console.log(c_idx)
+    console.log(conversion_items[c_idx])
+    console.log('toggle distance!')
+    const target = e.target || window;
+
+    const distance = parseFloat([...target.children].find(n => n.classList.contains('distance-num')).textContent);
+    const distance_type = [...target.children].find(n => n.classList.contains('distance-type'));
+
+    console.log(distance)
+    console.log(distance_type)
+    // ch1 
+
+    // if distance and type
+    if(distance_type){
+        // convert 
+        convertDistance(global_totalDistance,'miles',conversion_items[c_idx]);
+        document.querySelector('.distance-type').textContent = conversion_helper[conversion_items[c_idx]]; // update the type
+
+        // find a way to update the conversion on nav-play
+    }
+}
+
+function convertDistance(num,from,to) {
+    const conversions = {
+        mile_kilometer:1.609,
+        mile_meter:1609.34
+    }
+    return conversions.hasOwnProperty(`${from}_${to}`) ?  num %= conversions[`${from}_${to}`] : num
+
+}
+
 
 function clearModal() {
     if(modal && !modal.classList.contains('no-display')) {
@@ -197,8 +243,8 @@ function detectInprogress(element){
     } else {
         showNavTime()
 
-        let watchId;
-        let totalDistanceMiles = 0;
+        
+        // let totalDistanceMiles = 0;
         let lastPosition = null;
         let isPaused = false;
 
@@ -218,6 +264,10 @@ function detectInprogress(element){
                     
                     if(e.target.id==='nav-play'){ // play
                         startTimer()
+
+                        // distance num container click
+                        distanceNumContainer.onclick = toggleDistance;
+                        
                         // nav series
                         isPaused = false;
                         document.getElementById('nav-pause').classList.remove('no-display')
@@ -259,6 +309,7 @@ function detectInprogress(element){
                                 console.log(`Total: ${totalDistanceMiles.toFixed(2)} mi`);
 
                                 document.querySelector('.distance-num').textContent = totalDistanceMiles.toFixed(2);
+                                global_totalDistance = totalDistanceMiles.toFixed(2);
                             }
 
                             lastPosition = currentPosition;
@@ -398,18 +449,14 @@ function activateTemplate(type) {
 function handleCompletion(element) {
     handleVibrate()
 
-    document.getElementById('nav-pause').click()
 
-    totalSeconds = 0 // set total seconds to 0
     
     // set li background to red
     updateItem(element, 'completed');
 
     exitModal()
 
-    // reset playback
-    document.getElementById('hms-elapsed').textContent = '00:00:00'
-    document.querySelector('.distance-num').textContent = '0.00'
+    abortRunningSession()
 
     document.getElementById('nav-pause').classList.add('no-display')
     document.getElementById('nav-stop').classList.add('no-display')
@@ -418,13 +465,6 @@ function handleCompletion(element) {
 
 }
 
-function convertDistance(num,from,to) {
-    const conversions = {
-        kilometer_mile:1.609,
-    }
-    return conversions.hasOwnProperty(`${from}_${to}`) ?  num %= conversions[`${from}_${to}`] : num
-
-}
 
 
 function targetCurrentPosition(){
@@ -490,4 +530,20 @@ function startTimer() {
 function pauseTimer() {
     clearInterval(timerId); // Stop the interval
     timerId = null;
+}
+
+export function abortRunningSession(){
+    if (watchId !== null) {
+        navigator.geolocation.clearWatch(watchId);
+        watchId = null;
+    }
+    document.getElementById('nav-pause').click()
+
+    totalSeconds = 0 // set total seconds to 0
+    totalDistanceMiles = 0 // reset total distance
+
+    // reset playback
+    document.getElementById('hms-elapsed').textContent = '00:00:00'
+    document.querySelector('.distance-num').textContent = '0.00'
+
 }
