@@ -197,33 +197,33 @@ function detectInprogress(element){
     } else {
         showNavTime()
 
-
+        let watchId;
+        let totalDistanceMiles = 0;
+        let lastPosition = null;
+        let isPaused = false;
 
         for(let i in playback){
             let playback_element = document.getElementById(`nav-${i}`);
 
-            playback_element.onclick = () => {
+            playback_element.onclick = (e) => {
                 handleVibrate()
                 // send all properties to false
                 Object.keys(playback).map(pb => playback[pb] = false)
 
                 if(i){
                     playback[i] = true;
-                    if(i === 'stop') return;
 
                     playback_element.classList.add('no-display')
-                    let watchId;
                     
-                    if(i==='play'){ // play
+                    
+                    if(e.target.id==='nav-play'){ // play
+                        startTimer()
                         // nav series
-                        
+                        isPaused = false;
                         document.getElementById('nav-pause').classList.remove('no-display')
                         document.getElementById('nav-stop').classList.remove('no-display')
                         console.log('starting our event!')
 
-
-                        let totalDistanceMiles = 0;
-                        let lastPosition = null;
 
                         // Radius of the Earth in miles
                         const EARTH_RADIUS_MILES = 3958.8;
@@ -241,6 +241,8 @@ function detectInprogress(element){
 
                         // 2. Callback function on location change
                         function updatePosition(position) {
+                            if(isPaused) return;
+
                             const currentPosition = {
                                 lat: position.coords.latitude,
                                 lng: position.coords.longitude
@@ -280,17 +282,18 @@ function detectInprogress(element){
                             return value * Math.PI / 180;
                         }
                     } 
-                    if(i==='pause'){ // pause
+                    if(e.target.id === 'nav-pause' || e.target.id === 'nav-stop'){ // pause
+                        pauseTimer()
+                        isPaused = true;
                         // nav series
                         if (watchId !== null) {
                             navigator.geolocation.clearWatch(watchId);
-                            document.querySelector('.distance-num').textContent = document.querySelector('.distance-num').textContent;
                         }
-                        
+
                         document.getElementById('nav-play').classList.remove('no-display')
                         document.getElementById('nav-stop').classList.add('no-display')
                         console.log('pausing our event!')
-                        return;
+                       return
                     } 
                 }
             }
@@ -394,10 +397,25 @@ function activateTemplate(type) {
 
 function handleCompletion(element) {
     handleVibrate()
+
+    document.getElementById('nav-pause').click()
+
+    totalSeconds = 0 // set total seconds to 0
+    
     // set li background to red
     updateItem(element, 'completed');
 
     exitModal()
+
+    // reset playback
+    document.getElementById('hms-elapsed').textContent = '00:00:00'
+    document.querySelector('.distance-num').textContent = '0.00'
+
+    document.getElementById('nav-pause').classList.add('no-display')
+    document.getElementById('nav-stop').classList.add('no-display')
+
+    document.getElementById('nav-play').classList.remove('no-display')
+
 }
 
 function convertDistance(num,from,to) {
@@ -439,4 +457,37 @@ if ("geolocation" in navigator) {
   // Geolocation is not supported by the browser
   console.log("Geolocation is not supported by this browser.");
 }
+}
+
+
+// timer
+let totalSeconds = 0;
+let timerId = null;
+
+function updateTimer() {
+    totalSeconds++;
+    
+    // Calculate hours, minutes, and seconds
+    const hrs = Math.floor(totalSeconds / 3600);
+    const mins = Math.floor((totalSeconds % 3600) / 60);
+    const secs = totalSeconds % 60;
+
+    // Format as HH:MM:SS
+    const timeString = [hrs, mins, secs]
+        .map(v => v.toString().padStart(2, '0'))
+        .join(':');
+
+    // Return string to a <p> element with id "timer"
+    document.getElementById('hms-elapsed').textContent = timeString;
+}
+
+function startTimer() {
+    if (!timerId) {
+        timerId = setInterval(updateTimer, 1000); // Update every 1 second
+    }
+}
+
+function pauseTimer() {
+    clearInterval(timerId); // Stop the interval
+    timerId = null;
 }

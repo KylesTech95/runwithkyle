@@ -612,6 +612,7 @@ height:33px;
 .contact-label {
     font-size:9pt;
 }
+
 .contact-img {
     height:50px;
 
@@ -1042,11 +1043,15 @@ a{
 
     background-color: green;
 
-    border:5px solid var(--border-secondary);
+    width:100%;
+
+    text-align: center;
+
+    /* border:5px solid var(--border-secondary); */
     border-right:none !important;
     position:absolute;
     bottom:0;
-    right:5px;
+    right:0;
 }
 .completion-btn:hover{
     cursor:pointer;
@@ -1054,6 +1059,8 @@ a{
 section#modal-container {
     /* height:75%; */
     padding:.25rem;
+
+    padding-bottom: 3rem;
 
     width:83%;
 
@@ -1076,7 +1083,7 @@ section#modal-container {
 
     overflow:hidden;
     overflow-y:scroll;
-    
+
 }
 
 /* exit modal */
@@ -1281,6 +1288,24 @@ section#modal-container {
 #nt-playback-container > img:hover 
 {
     cursor:pointer;
+}
+#hms-elapsed {
+    font-size:21pt;
+    font-weight: bold;
+
+    border-radius: 12px;
+
+    padding:4px;
+
+    width:200px;
+
+    text-align: center;
+
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+
 }
 #nt-playback-container > img {
 height:50px;

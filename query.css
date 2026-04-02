@@ -169,10 +169,17 @@
 }
 
 section#modal-container {
-    height:100% !important;
+    height:300px !important;
 }
 
 .reduce-height{
     height:80px !important;
 }
+
+.completion-btn{
+    right:0;
+    bottom:-100%;
+    transform: translate(0,32px);
+}
+
 }
