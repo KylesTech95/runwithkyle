@@ -19,6 +19,7 @@ const wrapper = document.getElementById('wrapper')
 const window_type = 'modal'
 const completion_check = document.querySelector('.completion-check')
 const distanceNumContainer = document.getElementById('nt-distance-container')
+const calDistance = document.getElementById('cal-distance')
 
 export function view_modal(type, options = {calendar:{li:undefined}}) {
 
@@ -130,7 +131,7 @@ function convertDistance(num,from,to) {
 
     const conversions = {
         mile_kilometer:1.609,
-        mile_meter:1609.34
+        mile_meter:1609.34,
     }
     console.log(conversions.hasOwnProperty(`${from}_${to}`))
     console.log(conversions[`${from}_${to}`]||'does not exist')
@@ -333,10 +334,13 @@ function detectInprogress(element){
                                 console.log(dt_text)
                                 
                                 const stored_conversion = convertDistance(totalDistanceMiles,'mile',dt_text=='km'?'kilometer':dt_text=='meters'?'meter':undefined).toFixed(4);
+
                                 console.log(stored_conversion)
 
                                 document.querySelector('.distance-num').textContent = stored_conversion
                                 global_totalDistance = stored_conversion
+
+                                checkDistanceCompletion(totalDistanceMiles, element)
                             }
 
                             lastPosition = currentPosition;
@@ -499,6 +503,27 @@ function handleCompletion(element) {
 
 }
 
+function checkDistanceCompletion(distance,element){
+    console.log('checking distance completion')
+    let ndistance = parseFloat(distance);
+
+    console.log(ndistance)
+    console.log(element)
+
+    let expected_distance = [...calDistance.children].find(x=>x.classList.contains('cal-answer'));
+    let expected_split = expected_distance.textContent.split` `
+    let expected_num = +expected_split[0]
+    let expected_type = expected_split[1]
+
+    let convert_to_miles = expected_type=='kilometer' ? expected_num/=1.609 : expected_type=='meter' ? expected_num/=1609.34 : expected_num
+    if(expected_num!==null){
+        console.log('number is expected')
+        if(ndistance>=convert_to_miles){
+            const distance_met = 'Great Job! You are finished.'
+           confirm_prompt(distance_met).then(() => handleCompletion(element))
+        }
+    }
+}
 
 
 function targetCurrentPosition(){
