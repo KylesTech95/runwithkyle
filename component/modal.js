@@ -101,17 +101,20 @@ function toggleDistance(e) {
     console.log('toggle distance!')
     const target = e.target || window;
 
-    const distance = parseFloat([...target.children].find(n => n.classList.contains('distance-num')).textContent);
+    const distance = ([...target.children].find(n => n.classList.contains('distance-num')));
     const distance_type = [...target.children].find(n => n.classList.contains('distance-type'));
 
-    console.log(distance)
     console.log(distance_type)
     // ch1 
 
     // if distance and type
     if(distance_type){
         // convert 
-        convertDistance(global_totalDistance,'miles',conversion_items[c_idx]);
+        
+        console.log(conversion_items[c_idx])
+        console.log(conversion_helper[conversion_items[c_idx]])
+
+        distance.textContent = convertDistance(totalDistanceMiles,'mile',conversion_items[c_idx].replace(/s$/,'')).toFixed(4);
         document.querySelector('.distance-type').textContent = conversion_helper[conversion_items[c_idx]]; // update the type
 
         // find a way to update the conversion on nav-play
@@ -119,11 +122,21 @@ function toggleDistance(e) {
 }
 
 function convertDistance(num,from,to) {
+    if(!to || to == undefined) {
+        return num;
+    }
+
+    console.log('converting....',`${from}_${to}`)
+
     const conversions = {
         mile_kilometer:1.609,
         mile_meter:1609.34
     }
-    return conversions.hasOwnProperty(`${from}_${to}`) ?  num %= conversions[`${from}_${to}`] : num
+    console.log(conversions.hasOwnProperty(`${from}_${to}`))
+    console.log(conversions[`${from}_${to}`]||'does not exist')
+
+
+    return conversions.hasOwnProperty(`${from}_${to}`) ? num *= conversions[`${from}_${to}`] : num
 
 }
 
@@ -308,8 +321,22 @@ function detectInprogress(element){
                                 console.log(`Segment: ${distance.toFixed(2)} mi`);
                                 console.log(`Total: ${totalDistanceMiles.toFixed(2)} mi`);
 
-                                document.querySelector('.distance-num').textContent = totalDistanceMiles.toFixed(2);
-                                global_totalDistance = totalDistanceMiles.toFixed(2);
+
+                                // convert here 
+                                const distance_type = document.querySelector('.distance-type');
+                                const dt_text = distance_type.textContent;
+                                
+                                console.log("TeST CONVERT DIST")
+                                console.log([...Object.keys(conversion_helper)])
+                                console.log([...Object.values(conversion_helper)])
+
+                                console.log(dt_text)
+                                
+                                const stored_conversion = convertDistance(totalDistanceMiles,'mile',dt_text=='km'?'kilometer':dt_text=='meters'?'meter':undefined).toFixed(4);
+                                console.log(stored_conversion)
+
+                                document.querySelector('.distance-num').textContent = stored_conversion
+                                global_totalDistance = stored_conversion
                             }
 
                             lastPosition = currentPosition;
@@ -341,6 +368,13 @@ function detectInprogress(element){
                             navigator.geolocation.clearWatch(watchId);
                         }
 
+                        if(e.target.id === 'nav-stop'){
+                            const completion_question = 'Confirm event completion'
+                            confirm_prompt(completion_question).then(x => handleCompletion(element)).catch(()=> {
+                                document.getElementById('nav-pause').click()
+                                return;
+                            })
+                        }
                         document.getElementById('nav-play').classList.remove('no-display')
                         document.getElementById('nav-stop').classList.add('no-display')
                         console.log('pausing our event!')
