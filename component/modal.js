@@ -103,6 +103,7 @@ const conversion_helper = {
     meters:'meters'
 }
 function toggleDistance(e) {
+    handleVibrate()
     c_idx++ // increate the index (starting is miles)
     c_idx %= conversion_items.length;
     console.log(c_idx)
@@ -123,7 +124,7 @@ function toggleDistance(e) {
         console.log(conversion_items[c_idx])
         console.log(conversion_helper[conversion_items[c_idx]])
 
-        distance.textContent = convertDistance(totalDistanceMiles,'mile',conversion_items[c_idx].replace(/s$/,'')).toFixed(4);
+        distance.textContent = convertDistance(totalDistanceMiles,'mile',conversion_items[c_idx].replace(/s$/,'')).toFixed(2);
         document.querySelector('.distance-type').textContent = conversion_helper[conversion_items[c_idx]]; // update the type
 
         // find a way to update the conversion on nav-play
@@ -234,6 +235,7 @@ function appendCompletion(element) {
 
 export function exitModal() {
 if(!modal.classList.contains('no-display')){
+    handleVibrate()
     let allExits = [...document.querySelectorAll('#modal-exit')]
     allExits.map(x => x.remove())
         // document.getElementById('modal-container').classList.remove('camera-remove')
@@ -341,7 +343,7 @@ function detectInprogress(element){
 
                                 console.log(dt_text)
                                 
-                                const stored_conversion = convertDistance(totalDistanceMiles,'mile',dt_text=='km'?'kilometer':dt_text=='meters'?'meter':undefined).toFixed(4);
+                                const stored_conversion = convertDistance(totalDistanceMiles,'mile',dt_text=='km'?'kilometer':dt_text=='meters'?'meter':undefined).toFixed(2);
                             
 
                                 console.log(stored_conversion)
