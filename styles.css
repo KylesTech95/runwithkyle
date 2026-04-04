@@ -368,7 +368,8 @@ nav#nav{
 
 }
 .back-glow {
-    box-shadow: 0 .125rem 8px .9px var(--tertiary-color)
+    border-bottom:4px solid var(--tertiary-color);
+    /* box-shadow: 0 .125rem 8px .9px var(--tertiary-color) */
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -1160,6 +1161,12 @@ section#modal-container {
 
     color:var(--alert-color);
 
+}
+
+#cal-completed {
+    display:flex;
+    flex-direction: column;
+    gap:8px;
 }
 
 .cal-answer { 

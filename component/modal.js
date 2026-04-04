@@ -2,14 +2,12 @@ import { convertTime, confirm_prompt } from "../main.js";
 import { updateItem, hideNavTime, showNavTime} from "../elapse.js";
 import { handleVibrate } from "../main.js";
 import { startCamera } from "./camera.js";
-
 /* ------------------------------------------- */
 const playback = {
     play:false,
     pause:false,
     stop:false,
 }
-let global_totalDistance = null;
 let totalDistanceMiles = 0;
 let watchId;
 
@@ -45,6 +43,16 @@ export function view_modal(type, options = {calendar:{li:undefined}}) {
         if(!options.calendar.li || options.calendar.li == undefined) {
             console.warn('options.calendar.li: check object / element');
             return;
+        }
+        const check_completion = JSON.parse(options.calendar.li.getAttribute('--data-currenttime'));
+        if(!check_completion) {
+            let completion_paras = [...document.querySelectorAll('#cal-completed > p')];
+            completion_paras.map(el => el.textContent = '')
+        } else {
+            let completed_para = [...document.querySelectorAll('#cal-completed > p')];
+            completed_para[0].textContent = `${check_completion.elapse}`;
+            completed_para[1].textContent = `${check_completion.distance}`;
+            completed_para[2].textContent = `${check_completion.percentage}`;
         }
         // process calendar item
         processCalendarItem(options.calendar.li);
@@ -334,11 +342,11 @@ function detectInprogress(element){
                                 console.log(dt_text)
                                 
                                 const stored_conversion = convertDistance(totalDistanceMiles,'mile',dt_text=='km'?'kilometer':dt_text=='meters'?'meter':undefined).toFixed(4);
+                            
 
                                 console.log(stored_conversion)
 
-                                document.querySelector('.distance-num').textContent = stored_conversion
-                                global_totalDistance = stored_conversion
+                                document.querySelector('.distance-num').textContent = stored_conversion;
 
                                 checkDistanceCompletion(totalDistanceMiles, element)
                             }
@@ -483,12 +491,51 @@ function activateTemplate(type) {
     if(findTemp) findTemp.classList.remove('no-display');
     return;
 }
+function handleActivityCompletion(element){
+    const check_completion = JSON.parse(element.getAttribute('--data-currenttime'));
 
+
+    if(check_completion){
+        let completed_para = [...document.querySelectorAll('#cal-completed > p')];
+        completed_para[0].textContent = `${check_completion.elapse}`;
+        completed_para[1].textContent = `${check_completion.distance}`;
+        completed_para[2].textContent = `${check_completion.percentage}`;
+    } else {
+        console.warn('check completion data-variable')
+    }
+    
+}
 function handleCompletion(element) {
     handleVibrate()
+    let [dt,dn] = [document.querySelector('.distance-type').textContent,+document.querySelector('.distance-num').textContent]
+    let sm_helper = {
+        km:{
+            n:'kilometer',
+            o:1.609
+        },
+        meters:{
+            n:'meter',
+            o:1609.34
+        }
+    }
 
-
+    const calDistancePara = document.querySelector('#cal-distance > p');
+    let [cal_distance, cal_type] = calDistancePara.textContent.split` `; 
+    cal_distance = +cal_distance
     
+    let total_miles = cal_type=='kilometer' ? cal_distance/=1.609 : cal_type=='meter' ? cal_distance/=1609.34 : cal_distance
+    let current_milage = sm_helper[dt] ? (dn /= sm_helper[dt].o) : dn;
+    let percentage = Math.floor((current_milage / total_miles)*100) + '%'
+
+    console.log(percentage)
+
+    let current_distance = convertDistance(totalDistanceMiles,'mile',cal_type).toFixed(2) + ' ' + cal_type;
+    // set data variable
+    let currenttime_info = JSON.stringify({elapse:document.getElementById('hms-elapsed').textContent,distance:current_distance,percentage:percentage})
+    element.setAttribute('--data-currenttime', currenttime_info)
+    
+    handleActivityCompletion(element)
+
     // set li background to red
     updateItem(element, 'completed');
 
