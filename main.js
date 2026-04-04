@@ -545,3 +545,21 @@ window.onscroll = (e) => {
         header_element.classList.remove('back-glow')
     }
 }
+
+function outer() {
+    let a = 10;
+    return function inner() {
+        console.log(a);
+    };
+}
+const fn = outer();
+fn();
+
+function* generator() {
+    yield 1;
+    yield 2;
+    yield 3;
+}
+
+const gen = generator();
+console.log(gen.next().value)

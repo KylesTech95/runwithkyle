@@ -378,6 +378,7 @@ function detectInprogress(element){
                         // nav series
                         if (watchId !== null) {
                             navigator.geolocation.clearWatch(watchId);
+                            totalDistanceMiles = totalDistanceMiles;
                         }
 
                         if(e.target.id === 'nav-stop'){

@@ -155,7 +155,7 @@ export function updateItem(element, status) {
       reservations.map(r => r.classList.add('no-display'))
 
       // add camera capabilities
-      camera.classList.remove('no-display')
+      // camera.classList.remove('no-display')
     break;
     case status === 'completed':
       element.classList.remove('bg-green')
