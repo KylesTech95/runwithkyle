@@ -722,10 +722,10 @@ cursor:pointer;
 }
 .remove-button {
     position:absolute;
-    bottom:-4px;
+    bottom:-5px;
     right:0;
 
-    padding:8px ;
+    padding:10px ;
 
     background:var(--primary-bg);
 
@@ -875,7 +875,7 @@ cursor:pointer;
 }
 
 #time-container > p {
-    font-size:11pt;
+    font-size:9pt;
 }
 
 #time-container {
@@ -883,7 +883,7 @@ cursor:pointer;
     right:0;
     top:0;
 
-    padding:.5rem;
+    padding:4px;
     
     background:var(--primary-bg);
 
