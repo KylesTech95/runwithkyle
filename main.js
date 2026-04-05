@@ -114,6 +114,7 @@ setInterval(()=> {
 // functions
 // toggle navigation (mobile)
 function toggleNav(e) {
+    handleVibrate()
     const cross = 'cross-'; // var
     const target = e.target||window; // capture toggle container
 
