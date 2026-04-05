@@ -9,6 +9,7 @@ const playback = {
     stop:false,
 }
 let totalDistanceMiles = 0;
+let lastPosition = null;
 let watchId;
 
 const modal = document.getElementById('modal-container')
@@ -268,8 +269,7 @@ function detectInprogress(element){
         showNavTime()
 
         
-        // let totalDistanceMiles = 0;
-        let lastPosition = null;
+        // let lastPosition = null;
         let isPaused = false;
 
         for(let i in playback){
@@ -380,7 +380,7 @@ function detectInprogress(element){
                         // nav series
                         if (watchId !== null) {
                             navigator.geolocation.clearWatch(watchId);
-                            totalDistanceMiles = totalDistanceMiles;
+                            lastPosition = null;
                         }
 
                         if(e.target.id === 'nav-stop'){
